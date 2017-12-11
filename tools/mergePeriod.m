@@ -5,6 +5,14 @@ function res = mergePeriod(p1,p2,tBeg,tEnd)
 % res{1,2} p1 off p2 on;
 % res{2,1} p1 on p2 off;
 % res{2,2} p1 on p2 on; 
+
+if ~exist('tBeg','var') || isempty(tBeg)
+    tBeg=min([p1(:);p2(:)]);
+end
+if ~exist('tEnd','var') || isempty(tEnd)
+    tEnd=max([p1(:);p2(:)]);
+end
+
 if isempty(p1)&&isempty(p2)
     res{1,1}=[tBeg,tEnd];
     res{1,2}=[];
