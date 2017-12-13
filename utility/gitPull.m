@@ -1,7 +1,15 @@
 function gitPull(varargin)
+% quick shortcut to pull remote repository to local
+%
+% gitPull([options, vaules])
+%    gitDir : directory which contains git commands ('/usr/local/bin')
+%    repoDir : repository directory ('~/Documents/MATLAB/matlab_tools')
+%
+% Dec 2017
+% Hiroyuki Miyawaki
+%
 
-
-    param.gitDir='/usr/local/bin/git';
+    param.gitDir='/usr/local/bin';
     param.repoDir='~/Documents/MATLAB/matlab_tools';    
     
     paramNames=fieldnames(param);

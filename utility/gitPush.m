@@ -1,5 +1,14 @@
 function gitPush(varargin)
-
+% quick shortcut to push local repository to remote
+%
+% gitPush([options, vaules])
+%    gitDir : directory which contains git commands ('/usr/local/bin')
+%    repoDir : repository directory ('~/Documents/MATLAB/matlab_tools')
+%    comment : commit comment (comit at YYYY-MMM-DD hh-mm-ss)
+%
+% Dec 2017
+% Hiroyuki Miyawaki
+%
     param.gitDir='/usr/local/bin';
     param.repoDir='~/Documents/MATLAB/matlab_tools';
     param.comment=['comit at ' datestr(now) ];
