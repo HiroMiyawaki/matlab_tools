@@ -1,4 +1,4 @@
-function git_commit(gitPath)
+function git_push(gitPath)
 
 
     gitPath='/usr/local/bin/git'
@@ -7,6 +7,7 @@ function git_commit(gitPath)
     
     eval(['!' gitPath ' -C ' localPath ' add --all'])
     eval(['!' gitPath ' -C ' localPath ' commit -m ''' commitComment ''''])
+    eval(['!' gitPath ' -C ' localPath ' push'])
     
     
     
