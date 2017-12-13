@@ -1,13 +1,23 @@
 function git_push(varargin)
 
 
-    gitPath='/usr/local/bin/git'
-    localPath='~/Documents/MATLAB/matlab_tools/';
-    commitComment=['comit at ' datestr(now) ];
+    param.gitPath='/usr/local/bin/git';
+    param.localPath='~/Documents/MATLAB/matlab_tools/';
+    param.comment=['comit at ' datestr(now) ];
     
-    eval(['!' gitPath ' -C ' localPath ' add --all'])
-    eval(['!' gitPath ' -C ' localPath ' commit -m ''' commitComment ''''])
-    eval(['!' gitPath ' -C ' localPath ' push'])
+    
+    paramNames=fieldnames(param);
+    
+    for n=1:length(varargin)/2        
+        name=paramNames(strcmpi(paramNames,a));
+        if isempty(name)
+        
+        
+    end
+    
+    eval(['!' param.gitPath ' -C ' param.repoPath ' add --all'])
+    eval(['!' param.gitPath ' -C ' param.repoPath ' commit -m ''' param.comment ''''])
+    eval(['!' param.gitPath ' -C ' param.repoPath ' push'])
     
     
     
