@@ -1,7 +1,7 @@
 function gitPush(varargin)
 
-    param.gitPath='/usr/local/bin';
-    param.repoPath='~/Documents/MATLAB/matlab_tools/';
+    param.gitDir='/usr/local/bin';
+    param.repoDir='~/Documents/MATLAB/matlab_tools';
     param.comment=['comit at ' datestr(now) ];
         
     paramNames=fieldnames(param);    
@@ -19,12 +19,13 @@ function gitPush(varargin)
     end
     
     currentPath=getenv('PATH')
-    setenv([param
+    setenv('PATH',[param.gitDir ':' currentPath])
     
-    system(['git  -C ' param.repoPath ' add --all']);
-    system(['git -C ' param.repoPath ' commit -m ''' param.comment ''''])
-    system(['git -C ' param.repoPath ' push'])
+    system(['git  -C ' param.repoDir ' add --all']);
+    system(['git -C ' param.repoDir ' commit -m ''' param.comment ''''])
+    system(['git -C ' param.repoDir ' push'])
     
+    setenv('PATH',currentPath)
     
     
     
