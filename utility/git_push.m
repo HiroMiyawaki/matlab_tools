@@ -1,4 +1,4 @@
-function git_push(gitPath)
+function git_push(varargin)
 
 
     gitPath='/usr/local/bin/git'
