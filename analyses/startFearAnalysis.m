@@ -2,7 +2,6 @@ clear
 rootDir='~/data/Fear';
 idx=0;
 %%
-%repeat for each animal
 idx=idx+1;
 sessionList{idx}='magician170919';
 temp={repmat({'LA'},1,32),repmat({'mPFC'},1,60),repmat({'Cortex'},1,4),...
