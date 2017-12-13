@@ -18,13 +18,15 @@ function gitPush(varargin)
         end
     end
     
+    %add gitDir to $PATH
     currentPath=getenv('PATH')
-    setenv('PATH',[param.gitDir ':' currentPath])
+    setenv('PATH',[param.gitDir ':' currentPath]);
     
     system(['git  -C ' param.repoDir ' add --all']);
-    system(['git -C ' param.repoDir ' commit -m ''' param.comment ''''])
-    system(['git -C ' param.repoDir ' push'])
+    system(['git -C ' param.repoDir ' commit -m ''' param.comment '''']);
+    system(['git -C ' param.repoDir ' push']);
     
+    %remove gitDir from $PATH
     setenv('PATH',currentPath)
     
     

@@ -1,8 +1,8 @@
 function gitPull(varargin)
 
 
-    param.gitPath='/usr/local/bin/git';
-    param.repoPath='~/Documents/MATLAB/matlab_tools/';    
+    param.gitDir='/usr/local/bin/git';
+    param.repoDir='~/Documents/MATLAB/matlab_tools';    
     
     paramNames=fieldnames(param);
     
@@ -18,9 +18,16 @@ function gitPull(varargin)
             param.(name)=varargin{2*n};
         end
     end
-    eval(['!' param.gitPath ' -C ' param.repoPath ' pull'])
     
+    %add gitDir to $PATH
+    currentPath=getenv('PATH')
+    setenv('PATH',[param.gitDir ':' currentPath]);
     
+    system(['git -C ' param.repoDir ' pull']);
+    
+    %remove gitDir from $PATH
+    setenv('PATH',currentPath)
+
     
     
     
