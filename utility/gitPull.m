@@ -1,10 +1,8 @@
-function git_push(varargin)
+function gitPull(varargin)
 
 
     param.gitPath='/usr/local/bin/git';
-    param.repoPath='~/Documents/MATLAB/matlab_tools/';
-    param.comment=['comit at ' datestr(now) ];
-    
+    param.repoPath='~/Documents/MATLAB/matlab_tools/';    
     
     paramNames=fieldnames(param);
     
@@ -20,10 +18,7 @@ function git_push(varargin)
             param.(name)=varargin{2*n};
         end
     end
-    
-    eval(['!' param.gitPath ' -C ' param.repoPath ' add --all'])
-    eval(['!' param.gitPath ' -C ' param.repoPath ' commit -m ''' param.comment ''''])
-    eval(['!' param.gitPath ' -C ' param.repoPath ' push'])
+    eval(['!' param.gitPath ' -C ' param.repoPath ' pull'])
     
     
     
