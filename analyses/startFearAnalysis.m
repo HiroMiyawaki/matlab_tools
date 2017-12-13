@@ -1,7 +1,8 @@
 clear
 rootDir='~/data/Fear';
-
-idx=1;
+idx=0;
+%%
+idx=idx+1;
 sessionList{idx}='magician170919';
 temp={repmat({'LA'},1,32),repmat({'mPFC'},1,60),repmat({'Cortex'},1,4),...
       {'EMG'},{'ECG'},repmat({'Accelerometer1'},1,3),repmat({'Accelerometer2'},1,3),...
