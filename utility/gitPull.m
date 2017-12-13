@@ -20,7 +20,7 @@ function gitPull(varargin)
     end
     
     %add gitDir to $PATH
-    currentPath=getenv('PATH')
+    currentPath=getenv('PATH');
     setenv('PATH',[param.gitDir ':' currentPath]);
     
     system(['git -C ' param.repoDir ' pull']);

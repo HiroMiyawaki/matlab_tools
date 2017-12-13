@@ -14,12 +14,12 @@ function gitPush(varargin)
         if isempty(name)
             error('Wrong option')
         else
-            param.(name)=varargin{2*n};
+            param.(name{1})=varargin{2*n};
         end
     end
     
     %add gitDir to $PATH
-    currentPath=getenv('PATH')
+    currentPath=getenv('PATH');
     setenv('PATH',[param.gitDir ':' currentPath]);
     
     system(['git  -C ' param.repoDir ' add --all']);
