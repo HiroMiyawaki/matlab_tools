@@ -35,10 +35,6 @@ videoSession{idx}.name={'Baseline','Conditioning','CueAndExtinction','RetentionO
 videoSession{idx}.detectionintervals=temp;
 videoSession{idx}.range={[79 397 388 657],[78 381 354 657],[84 399 387 657],[88 402 394 657]};
 
-
-1 51 23
-13 50 34
-
 %%
 processList=[1];
 
