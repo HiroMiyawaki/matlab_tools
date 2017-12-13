@@ -1,0 +1,236 @@
+clear
+
+videoTimes= reshape(...
+    60.^[2,1,0] * ...
+    [
+    2,47,37
+    3,7,30
+    5,49,8
+    6,36,8
+    9,11,40
+    10,32,25
+    13,6,28
+    13,38,34
+    ]',...
+    2,[])';
+
+sessionNames={'baseline','conditioning','cueAndExtinction','retentionOfExtinction'};
+
+% analysesDataIdx=1:4;
+analysesDataIdx=[];
+
+dataDirRoot='~/data/OCU/implanted/magician/magician_2017-09-19_06-10-17';
+videofile='magician_2017-09-19-061042-0000.mp4';
+%%
+imageRange={};
+ledRange={};
+
+vr=VideoReader(fullfile(dataDirRoot,videofile));
+
+for idx=analysesDataIdx
+    
+    nameCore=videofile(1:end-4);
+    dataDirRoot=dataDirRoot;
+    if exist([dataDirRoot '/' nameCore '_' sessionNames{idx} '_freeze.mat'])
+        prevData=load([dataDirRoot '/' nameCore '_' sessionNames{idx} '_freeze.mat']);
+        imageRange{idx}=prevData.param.imageRange;
+        prevData=load([dataDirRoot '/' nameCore '_' sessionNames{idx} '_ledBlink.mat']);
+        ledRange{idx}=prevData.param.imageRange;
+    else
+        vr.CurrentTime=videoTimes(idx,1);
+        temp=zeros(vr.Height,vr.Width,3,vr.FrameRate*10);
+        for n=1:size(temp,4)
+            temp(:,:,:,n)=readFrame(vr);
+        end
+        close all
+        fh=figure('position',[200,1000,1280,960]);
+        imagesc(mean(temp,4)/255);
+        axis equal
+        set(gca,'clim',[0,255]);
+        colormap(gray);
+        title('Select area to show')
+        [y,x]=ginput(2);
+        xRange=[max([1,floor(min(x))]),min([ceil(max(x)),vr.Height])];
+        yRange=[max([1,floor(min(y))]),min([ceil(max(y)),vr.Width])];;
+        imageRange{idx}=[xRange,yRange];
+        rectangle('position',[yRange(1),xRange(1),diff(yRange),diff(xRange)],'EdgeColor','b')
+        
+        title('Select LED area')
+        if idx>1 && ~isempty(ledRange{idx-1})
+            ledRange{idx}=ledRange{idx-1};
+        else
+            ledPos=[];
+            for n=1:5
+                [y,x]=ginput(2);
+                xRange=[floor(min(x)),ceil(max(x))];
+                yRange=[floor(min(y)),ceil(max(y))];
+                ledPos(n,:)=[xRange,yRange];
+                rectangle('position',[yRange(1),xRange(1),diff(yRange),diff(xRange)],'EdgeColor','r')
+                drawnow;
+            end
+            ledRange{idx}=ledPos;
+        end
+    end
+end
+%%
+for idx=analysesDataIdx
+    freezeDetection2(fullfile(dataDirRoot,videofile),imageRange{idx},100,videoTimes(idx,1),videoTimes(idx,2),sessionNames{idx});
+    ledReadFromVideo2(fullfile(dataDirRoot,videofile),ledRange{idx},videoTimes(idx,1),videoTimes(idx,2),sessionNames{idx});
+end
+
+%%
+BehTypeList={'Baseline','Conditioning','Cue & Extinction' 'Retention of Extinction'};
+
+doAppend='';
+savePdfName='~/data/OCU/implanted/magician/magician_behavior.pdf';
+ratNameList={'HR0032 : codename magician'}
+for n=1
+    figH=initFig4Nature(2);
+    switch n
+        case 1
+            dataDirRoot='~/data/OCU/implanted/magician/magician_2017-09-19_06-10-17/';
+            videofile='magician_2017-09-19-061042-0000.mp4';
+            sessionNames={'baseline','conditioning','cueAndExtinction','retentionOfExtinction'};
+            nRow=[1,2,3,2];
+            rowDur=20;
+            yRange=[0,1250]
+%         case 2
+%             dataDirRoot='~/data/OCU/eyelid_base/HR0029/';
+%         case 3
+%             dataDirRoot='~/data/OCU/eyelid_base/HR0031/';
+        otherwise
+            continue
+    end
+    
+    offsets=cumsum([0,nRow])+(0:length(nRow));
+
+    for fIdx=1:length(sessionNames)
+
+        nameCore=videofile(1:end-4);
+        freeze=load([dataDirRoot nameCore '_' sessionNames{fIdx} '_freeze.mat']);
+        ledEvt=load([dataDirRoot nameCore '_' sessionNames{fIdx} '_ledBlink.mat']);
+        clear event
+        evtName={'clock','experiment','CS_puls','CS_minus','shock'};
+        thresholdList=[];
+        for ledIdx=1:size(ledEvt.ledVal,1)
+%             [cnt,bin]=hist(ledEvt.ledVal(ledIdx,:),100);
+%             [peaks,index]=findpeaks(cnt);
+%             [~,id]=sort(peaks,'descend');
+%             threshold=mean(bin(index(id(1:2))));
+            r=zeros(1,255);
+            val=ledEvt.ledVal(ledIdx,:);
+            for idx= 1:length(r)                
+                r(idx)=sum(val<idx)*sum(val>=idx)*(mean(val(val<idx))-mean(val(val>=idx)))^2;
+            end
+            [~,thresholdList(ledIdx)]=max(r);
+        end
+        thresholdList(4)=255;
+        if fIdx~=2
+            thresholdList(5)=255;
+        end
+            
+        for ledIdx=1:size(ledEvt.ledVal,1)
+            threshold=thresholdList(ledIdx);
+            event.(evtName{ledIdx})=hmSchmittTrigger(ledEvt.ledVal(ledIdx,:),threshold,threshold,ledEvt.ledVal(ledIdx,1)>threshold);
+        end
+        if fIdx==2 && size(event.experiment,1)>1
+            [~,longestIdx]=max(diff(event.experiment,1,2));
+            event.experiment=event.experiment(longestIdx,:);
+        end
+        
+        if fIdx~=2
+            event.shock=[];
+        else
+            event.shock=event.CS_puls;
+            event.shock(:,1)=event.shock(:,2)-2;
+        end
+        
+        frameOffset=event.experiment(1);
+%         if n<3&& fIdx==1
+%         evt=sortrows([event.CS_puls,1*ones(size(event.CS_puls,1),1);
+%             event.CS_minus,2*ones(size(event.CS_minus,1),1);
+%             event.CS_puls(:,1)+50*ledEvt.param.frameRate,event.CS_puls(:,1)+52*ledEvt.param.frameRate,3*ones(size(event.CS_puls,1),1)]);
+%         else
+        evt=sortrows([event.CS_puls,1*ones(size(event.CS_puls,1),1);
+            event.CS_minus,2*ones(size(event.CS_minus,1),1);
+            event.shock,3*ones(size(event.shock,1),1)]);
+%         end
+        evt(:,1:2)=evt(:,1:2)-frameOffset;
+        evt(:,1:2)=evt(:,1:2)/ledEvt.param.frameRate;
+        
+        col=[0,0.7,0;0,0,1;1,0,0,];
+        
+        
+        t=((event.experiment(1):event.experiment(2))-frameOffset)/ledEvt.param.frameRate/60;
+        movement=freeze.change(event.experiment(1):event.experiment(2));
+        movement=medfilt1(movement,3);
+        logMv=log10(movement+1);
+        logMv(isnan(logMv)|isinf(logMv))=[];
+        
+        r=zeros(1,1000);
+        for idx= 1:length(r)
+            logTh=log10(idx+1);
+            r(idx)=sum(logMv<logTh)*sum(logMv>=logTh)*(mean(logMv(logMv<logTh))-mean(logMv(logMv>=logTh)))^2;
+        end
+        [~,moveThreshold]=max(r);
+        
+        moveThreshold=moveThreshold+20;
+        
+        fz=(movement<moveThreshold);
+        
+        onset=find(diff(fz)==1)+1;
+        offset=find(diff(fz)==-1);
+        
+        if offset(1)<onset(1); onset=[1,onset]; end
+        if offset(end)<onset(end); offset(end+1)=diff(event.experiment); end
+        
+        frz=removeTransient([onset',offset'],1,5*freeze.param.frameRate);
+        frz=(frz+event.experiment(1)-frameOffset)/freeze.param.frameRate/60;
+        
+        %         frz=(freeze.freeze)/freeze.param.frameRate/60;
+        
+        [cnt,bin]=hist(movement,1000);
+%         yRange(1)=0;
+%         yRange(2)=bin(find(cumsum(cnt)/sum(cnt)>0.99,1,'first'));
+        
+        
+        for rep=1:nRow(fIdx)
+            subplot(sum(nRow)+length(nRow)-1,1,rep+offsets(fIdx))
+            for evtIdx=1:size(evt,1)
+                rectangle('position',[evt(evtIdx,1)/60,0,diff(evt(evtIdx,1:2))/60,yRange(2)],...
+                    'linestyle','none','facecolor',col(evt(evtIdx,3),:))
+            end
+            hold on
+            if any(evt(:,3)==3)
+                plot(mean(evt(evt(:,3)==3,1:2),2)*[1,1]/60,[0,yRange(2)],'r-')
+            end
+            plot(t,movement,'-','color',0*[1,1,1],'linewidth',0.1)
+            plot(t([1,end]),freeze.param.moveThreshold*[1,1],'y-')
+            ylim(yRange)
+            
+            for frzIdx=1:size(frz,1)
+                rectangle('position',[frz(frzIdx,1),yRange(2)*0.9,diff(frz(frzIdx,:)),yRange(2)*0.1],...
+                    'linestyle','none','facecolor',[1,0.8,0])
+            end
+            
+            xlim((rep-1)*rowDur+[0,rowDur])
+            ax=fixAxis;
+            if rep==1
+                title(BehTypeList{fIdx})
+                if fIdx==1
+                   text2(-0.05,1.1,ratNameList{n},ax,{'fontsize',14,'verticalAlign','bottom','horizontalAlign','left'})
+                end                
+            end
+            ylabel({'Movement' '(Pic/Frame)'})
+        end
+        xlabel('Time (min)')
+        
+        
+        
+    end
+    addScriptName(mfilename)
+    print(savePdfName,'-dpdf','-painters')
+%     print(savePdfName,'-dpsc','-painters',doAppend)
+%     doAppend='-append';
+    
+end
