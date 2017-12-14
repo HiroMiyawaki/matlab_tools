@@ -45,7 +45,8 @@ function gitPull(varargin)
         end
     end
     
-    
+    disp(['repository directory :' param.repoDir])
+
     
     %add gitDir to $PATH
     currentPath=getenv('PATH');
