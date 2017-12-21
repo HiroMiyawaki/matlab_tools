@@ -60,7 +60,7 @@ paperPos=paperPos*10;
 
 yPos=(1-bottomPos)*paperPos(4)+Offset;
 xPos=rightPos*paperPos(3);
-subplotInMM(xPos-10,yPos,10,5,true)
+subplotInMM(xPos-10,yPos,10,5,true);
 
 xlim([0,1])
 ylim([0,1])
