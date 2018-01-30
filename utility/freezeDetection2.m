@@ -1,4 +1,4 @@
-function freezeDetection2(videofile,imageRange,threshold,tStart,tEnd,sessionName)
+function freezeDetection2(videofile,imageRange,threshold,tStart,tEnd,sessionName,saveFileName)
 
 if ~exist('sessionName','var') || isempty(sessionName)
     sessionName='_';
@@ -338,9 +338,18 @@ freeze=removeTransient([onset',offset'],1,5*vr.FrameRate);
 
 %%
 
-ext=findstr(videofile,'.');
-saveFileCore=[videofile(1:ext(end)-1) sessionName 'freeze'];
-saveFileName=[saveFileCore '.mat'];
+if ~exist('saveFileName','var')    
+    ext=findstr(videofile,'.');
+    saveFileCore=[videofile(1:ext(end)-1) sessionName 'freeze'];
+    saveFileName=[saveFileCore '.mat'];
+else
+    if strcmpi(saveFileName(end-3:end),'.mat')
+        saveFileCore=saveFileName(1:end-4);
+    else
+        saveFileCore=saveFileName;
+        saveFileName=[saveFileName '.mat'];
+    end
+end
 
 if exist(saveFileName,'file')
     

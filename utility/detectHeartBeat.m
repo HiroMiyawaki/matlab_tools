@@ -37,8 +37,9 @@ end
 for idx=1:length(varargin)/2
     name=varargin{2*idx-1};
 
-    if any(strcmpi(name,paramNames))    
-        params.(name)=varargin{2*idx};    
+    paramName=paramNames(strcmpi(name,paramNames));
+    if length(paramName)==1    
+        params.(paramName{1})=varargin{2*idx};    
     else
         error([name ' is a wrong parameter'])
     end

@@ -1,4 +1,4 @@
-function ledReadFromVideo2(videofile,imageRange,tStart,tEnd,sessionName)
+function ledReadFromVideo2(videofile,imageRange,tStart,tEnd,sessionName,saveFileName)
     close all
     nBaseFrame=250;%10 sec
 
@@ -108,10 +108,20 @@ lastFrame=idx;
        
 %%
 
-ext=findstr(videofile,'.');
-saveFileCore=[videofile(1:ext(end)-1) sessionName 'ledBlink'];
-saveFileName=[saveFileCore '.mat'];
-idx=0;
+
+
+if ~exist('saveFileName','var')    
+    ext=findstr(videofile,'.');
+    saveFileCore=[videofile(1:ext(end)-1) sessionName 'ledBlink'];
+    saveFileName=[saveFileCore '.mat'];
+else
+    if strcmpi(saveFileName(end-3:end),'.mat')
+        saveFileCore=saveFileName(1:end-4);
+    else
+        saveFileCore=saveFileName;
+        saveFileName=[saveFileName '.mat'];
+    end
+end
 
 
 if exist(saveFileName,'file')
