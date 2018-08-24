@@ -1,9 +1,13 @@
-function h=textInMM(Xpos,Ypos,String,Property)
+function h=textInMM(Xpos,Ypos,String,varargin)
 
 targetPos=[Xpos,Ypos]/10;
-if ~exist('Property','var')
-    Property={};
+
+if length(varargin)==1 && iscell(varargin)
+    Property=varargin{1};
+else
+    Property=varargin;
 end
+
 unit=get(gcf,'paperunit');
 if ~strcmp(unit,'centimeters')
     set(gcf,'paperunit','centimeters')

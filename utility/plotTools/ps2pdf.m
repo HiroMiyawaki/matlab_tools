@@ -1,3 +1,15 @@
+%function ps2pdf(psfile,[options])
+% convert psfile to pdf using ps2pdf
+%
+% psfile: path of target ps file
+%
+% options
+%   remove (false) whether remove ps file after conversion or not
+%   rmpath ('/bin/rm') full path of rm command
+%   ps2pdfpath ('/usr/local/bin/ps2pdf') full path of ps2pdf command
+%
+%By Hiro Miyawaki at the Osaka City Univ, 2018
+%
 function ps2pdf(psfile,varargin)
 
 
