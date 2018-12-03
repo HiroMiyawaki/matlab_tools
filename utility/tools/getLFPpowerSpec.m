@@ -39,6 +39,7 @@ param.windowSize=1; %in sec
 param.stepSize=0.5; %in sec
 param.freqRange=[0,330]; %Hz
 param.detectionInterval=[0,inf]; %in sec
+param.uVperBit=0.195;
 
 optionList=fieldnames(param);
 for n=1:length(varargin)/2
@@ -61,9 +62,9 @@ for n=1:length(targetCh)
     eeg=lfp.Data.data(targetCh(n),firstFrame:lastFrame);
     if param.whitening
         fprintf('  %s whitening lfp\n',datestr(now));
-        weeg=WhitenSignal(double(eeg));
+        weeg=WhitenSignal(double(eeg)*param.uVperBit);
     else
-        weeg=double(eeg);
+        weeg=double(eeg)*param.uVperBit;
     end
 
     fprintf('  %s computing FFT lfp\n',datestr(now));
