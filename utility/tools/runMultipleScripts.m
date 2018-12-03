@@ -25,7 +25,7 @@ for n=1:length(scriptList)
     catch err
         dumpFileName=['~/Desktop/dump-' datestr(now,'yymmdd-HHMM-SS.FFF') '.mat'];
         save(dumpFileName);
-%         load('~/Desktop/runMultipleScriptsTemp.mat');
+        %         load('~/Desktop/runMultipleScriptsTemp.mat');
         pID=num2str(feature('getpid'));
         load(['~/Desktop/runMultipleScriptsTemp_' pID '.mat'])
         txt = [datestr(now),'\n'];
@@ -43,12 +43,13 @@ for n=1:length(scriptList)
         save('~/Desktop/runMultipleScriptsResults.mat','-v7.3','res')
         
         display([datestr(now) ' crashed: '  scriptList{scriptIndex}])
-        mail(txt,['crashed: ' scriptList{scriptIndex}]);
-
+        %         mail(txt,['crashed: ' scriptList{scriptIndex}]);
+        sendResult(['crashed: ' scriptList{scriptIndex}],txt,'miyawaki625@gmail.com')
+        
     end
     if ~exist('err','var')
         
-%         load('~/Desktop/runMultipleScriptsTemp.mat');
+        %         load('~/Desktop/runMultipleScriptsTemp.mat');
         pID=num2str(feature('getpid'));
         load(['~/Desktop/runMultipleScriptsTemp_' pID '.mat'])
         if FileExists('~/Desktop/runMultipleScriptsResults.mat')
@@ -60,6 +61,28 @@ for n=1:length(scriptList)
         save('~/Desktop/runMultipleScriptsResults.mat','-v7.3','res');
         
         display([datestr(now) ' finished: '  scriptList{scriptIndex}])
-        mail([datestr(now),' finished'],['finished:' scriptList{scriptIndex}]);
+        %         mail([datestr(now),' finished'],['finished:' scriptList{scriptIndex}]);
+        sendResult([datestr(now),' finished'],['finished:' scriptList{scriptIndex}],'miyawaki625@gmail.com')
     end
+end
+end
+function sendResult(mailTitle,mailBody,address)
+fprintf('%s\n',mailTitle)
+fprintf(mailBody)
+fprintf('\n\n')
+try
+    setpref('Internet','E_mail','mizusekilab@gmail.com');
+    setpref('Internet','SMTP_Server','smtp.gmail.com');
+    setpref('Internet','SMTP_Username','mizusekilab');
+    setpref('Internet','SMTP_Password','OsakaCityUniv2015');
+    props = java.lang.System.getProperties;
+    props.setProperty('mail.smtp.auth','true');
+    props.setProperty('mail.smtp.socketFactory.class', 'javax.net.ssl.SSLSocketFactory');
+    props.setProperty('mail.smtp.socketFactory.port','465');
+    
+    sendmail(address,mailTitle,sprintf(mailBody));
+catch
+    disp('Failed to send e-mail... anyway, the show must go on.')
+end
+
 end

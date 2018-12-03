@@ -14,11 +14,19 @@
  * Output: 
  *  (int16 *) dat : waveform
  *
- * typical example of usage on MATLAB
+ *
+ * typical examples for MATLAB
+ *
+ *  %read top channel of each shank
  *   [~,fileinfo]=fileatrib('foo.dat');
- *   nCh=64; ch=(1:8)'; frame=2718281:3141592;
+ *   nCh=64; ch=(1:8:64)'; frame=2718281:3141592;
  *   dat=fastReadDat(fileinfo.Name,int16(nCh),int16(ch),int64(frame));
- *   % dat would be  8 x 423312 matrix
+ *
+ *  %read waveform of spikes on a shank
+ *   [~,fileinfo]=fileatrib('bar.dat');
+ *   nCh=64; ch=(1:8)'; spkTime=[1234,2345,3456,4567];
+ *   frame = spkTime+(-16:24)'; frame=frame(:)'; %get 41 points per spike for each channel
+ *   spk=reshape(fastReadDat(fileinfo.Name,int16(nCh),int16(ch),int64(frame)),length(ch),41,length(spkTime));
  *
  * Hiro Miyawaki at the Osaka City Univ, 2018 Aug
  *	
