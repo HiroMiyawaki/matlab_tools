@@ -9,7 +9,8 @@ function varargout=getLFPpowerSpec(lfpFile,nCh,targetCh,saveFile,varargin)
 %  stepSize=0.5; %in sec
 %  freqRange=[0,330]; %Hz
 %  detectionInterval=[0,inf]; %in sec
-
+%  varName='lfpSpec';
+%
 if ~exist(lfpFile,'file')
     error('%s not found', lfpFile)
 end
@@ -40,6 +41,7 @@ param.stepSize=0.5; %in sec
 param.freqRange=[0,330]; %Hz
 param.detectionInterval=[0,inf]; %in sec
 param.uVperBit=0.195;
+param.varName='lfpSpec';
 
 optionList=fieldnames(param);
 for n=1:length(varargin)/2
@@ -105,8 +107,11 @@ else
         fprintf('%s already exists: back up as %s\n',saveFile,backupFile)
     end
     
-    save(saveFile,'lfpSpec','-v7.3');
-    fprintf('%s results saved as %s\n',datestr(now),saveFile);
+    if ~strcmp(param.varName,'lfpSpec')
+        eval(sprintf('%s = lfpSpec;', param.varName))
+    end
+    save(saveFile,param.varName,'-v7.3');
+    fprintf('%s results saved in %s\n',datestr(now),saveFile);
     
 end
 
