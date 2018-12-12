@@ -12,17 +12,18 @@ function varargout=lfpWavelet(lfpFile,nCh,ch,varargin)
 %Options and default values
 % SamplingRate=1250; %Hz
 % FreqRange=[1,120]; %Hz
-% K0=6;
 % DJ=0.25;
 % FrameRange=[1,inf]; %frame
 % saveFileName=''; %not save the result if it's empty
 % saveArg={'wave','frequency','period','scale','coi','param'};
 % mother='MORLET'
 % pad = 0;
-% waveBaseParam=-1;
+% waveBaseParam=6; %for MORLET
 %
 %outputs
 % [wave,frequency,period,scale,coi]
+%   wave is the wavelet in complex values.
+%
 %
 %
 % By Hiro Miyawaki at Osaka City Univ, 2018 Dec
@@ -30,7 +31,7 @@ function varargout=lfpWavelet(lfpFile,nCh,ch,varargin)
 %%
 %
 % TO DO
-% get correct FreqRange for mother wevlets other than MORLET
+% handle FreqRange correctly for mother wevlets other than MORLET
 %
 %%
 fileInfo=dir(lfpFile);
@@ -45,7 +46,6 @@ nFrame=fileInfo.bytes/nCh/2;
 %% default values
 param.SamplingRate=1250; %Hz
 param.FreqRange=[1,120]; %Hz
-param.K0=6;
 param.DJ=0.25;
 param.FrameRange=[1,inf]; %frame
 param.saveFileName=''; %not save the result if it's empty
@@ -53,8 +53,7 @@ param.saveArg={'wave','frequency','period','scale','coi','param'};
 
 param.mother='MORLET';
 param.pad = 0;
-param.waveBaseParam=-1;
-param.generator=mfilename;
+param.waveBaseParam=6;
 
 paramList=fieldnames(param);
 
@@ -71,6 +70,14 @@ for n=1:length(varargin)/2
     
     param.(paramList{pIdx})=varargin{2*n};
 end
+%%
+param.generator=mfilename;
+param.lfpFile=lfpFile;
+param.nCh=nCh;
+param.ch=ch;
+param.date=today('datetime');
+param.K0=param.waveBaseParam;
+
 %% check/fix options
 firstFrame=max([1,min(param.FrameRange)]);
 lastFrame=min([max(param.FrameRange),nFrame]);
@@ -246,6 +253,17 @@ if nargout>1;varargout{2}=frequency;end
 if nargout>2;varargout{3}=period;end
 if nargout>3;varargout{4}=scale;end
 if nargout>3;varargout{5}=coi;end
+
+
+if isempty(param.saveFileName) && nargout==0
+    imagescXY([1,length(lfp)]/param.SamplingRate,period,log((abs(wave').^2)))
+    xlabel('Time (s)')
+    ylabel('Frequency (Hz)')
+    ytick=get(gca,'YTick')
+    if ytick(1)==0; ytick(1)=min(period); end
+    set(gca,'ytick',ytick,'YTickLabel',1./ytick)
+    set(gca,'YDir','reverse')
+end
 
 end
 
