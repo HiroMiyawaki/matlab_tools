@@ -4,15 +4,20 @@ function param=parseParameters(default,varargin)
 % default: structure with default values
 %
 
-if mod(length(varargin),2)~=0
+if length(varargin)==1 && iscell(varargin)
+    inputs=varargin{:};
+else
+    inputs=varargin;
+end
+if mod(length(inputs),2)~=0
     error('options must be pairs of name and value')
 end
 param=default;
 optionList=fieldnames(default);
-for n=1:length(varargin)/2
-    idx=find(strcmpi(optionList,varargin{2*n-1}));
+for n=1:length(inputs)/2
+    idx=find(strcmpi(optionList,inputs{2*n-1}));
     if isempty(idx)
-        error('Wrong option: %s',varargin{2*n-1})
+        error('Wrong option: %s',inputs{2*n-1})
     end
-    param.(optionList{idx})=varargin{2*n};
+    param.(optionList{idx})=inputs{2*n};
 end
