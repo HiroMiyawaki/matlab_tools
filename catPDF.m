@@ -50,7 +50,7 @@ if length(idx) ~=length(inputFiles)
     inputFiles=inputFiles(sort(idx));
 end
 %% check output file
-if length(outputFile)<4  || strcmpi(outputFile(end-3:end),'.pdf')
+if length(outputFile)<4  || ~strcmpi(outputFile(end-3:end),'.pdf')
     outputFile=[outputFile '.pdf'];
 end
 
