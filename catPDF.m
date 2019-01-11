@@ -1,9 +1,9 @@
-function catPDF(output,inputs,varargin)
-% function catPDF(output,inputs,options)
+function catPDF(outputFile,inputFiles,varargin)
+% function catPDF(outputFile,inputFiles,options)
 %  concatenate multiple PDFs to one PDF file using gs
 %
-%  output : output PDF file name
-%  inputs : cell which contains list of input PDF files;
+%  outputFile : output PDF file name
+%  inputFiles : cell which contains list of input PDF files;
 %
 %  options and default values
 %   gsPath='/usr/local/bin/gs' %path of gs command
@@ -23,33 +23,39 @@ param.remove=false;
 param=parseParameters(param,varargin);
 
 %% check input files
-if isempty(inputs)
+if isempty(inputFiles)
     error('give at least one input file')
 end
 
-for n=1:length(inputs)
-    if exist(inputs{n},'file'); 
+for n=1:length(inputFiles)
+    if exist(inputFiles{n},'file'); 
         continue
-    elseif exist([inputs{n} '.pdf'],'file') 
-        inputs{n} =[inputs{n} '.pdf'];
+    elseif exist([inputFiles{n} '.pdf'],'file') 
+        inputFiles{n} =[inputFiles{n} '.pdf'];
     else
-        error('%s not found',inputs{n})
+        error('%s not found',inputFiles{n})
     end
 end
 
 %% get fullpath of inputs
-for n=1:length(inputs)
-    [~,temp]=fileattrib(inputs{n});
-    inputs{n}=temp.Name;
+for n=1:length(inputFiles)
+    [~,temp]=fileattrib(inputFiles{n});
+    inputFiles{n}=temp.Name;
 end
 
+%% remove redundant input
+[~,idx]=unique(inputFiles);
+if length(idx) ~=length(inputFiles)
+    warning('%d redundant input Files were removed',length(inputFiles)- length(idx))
+    inputFiles=inputFiles(sort(idx));
+end
 %% check output file
-if length(output)<4  || strcmpi(output(end-3:end),'.pdf')
-    output=[output '.pdf'];
+if length(outputFile)<4  || strcmpi(outputFile(end-3:end),'.pdf')
+    outputFile=[outputFile '.pdf'];
 end
 
 %% get fullpath of output
-[fPath,fName,fExt]=fileparts(output);
+[fPath,fName,fExt]=fileparts(outputFile);
 if isempty(fPath)
     fPath=pwd;
 else
@@ -59,19 +65,19 @@ else
     [~,temp]=fileattrib(fPath);
     fPath=temp.Name;
 end    
-output=fullfile(fPath,[fName,fExt]);
+outputFile=fullfile(fPath,[fName,fExt]);
 
 %% check overwrite
-if exist(output,'file')
+if exist(outputFile,'file')
     if param.overwrite
-        warning('%s is overwritten',output)
+        warning('%s is overwritten',outputFile)
     else
-        error('%s already exist',output)
+        error('%s already exist',outputFile)
     end
 end
 
 %% call gs
-[st,cmdOut]=system(sprintf('%s -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=%s %s',param.gsPath,output,strjoin(inputs)));
+[st,cmdOut]=system(sprintf('%s -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=%s %s',param.gsPath,outputFile,strjoin(inputFiles)));
 
 if st~=0
     %gs didn't finish correctly
@@ -79,7 +85,7 @@ if st~=0
 end
 %%
 if param.remove
-    [st,cmdOut]=system(sprintf('%s %s',param.rmPath,strjoin(inputs)));
+    [st,cmdOut]=system(sprintf('%s %s',param.rmPath,strjoin(inputFiles)));
     if st~=0
         %gs didn't finish correctly
         error(cmdOut)
