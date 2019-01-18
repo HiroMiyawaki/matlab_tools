@@ -98,7 +98,7 @@ else
     lfpSpec.detectiondate = today('datetime');
     lfpSpec.detectionparms=param;
     
-    if exist(saveFile)hopefully I understood correctly
+    if exist(saveFile)
         [fDir,fName,fExt]=fileparts(saveFile);
         backupFile=fullfile(fDir,[fName ,'-backup',fExt])
         cnt=0;
