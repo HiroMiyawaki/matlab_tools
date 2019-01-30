@@ -1,9 +1,12 @@
-function plotIdentityLine(ah,options);
+function plotIdentityLine(ah,varargin);
     if ~exist('ah','var')
         ah=gca;
     end
-    if ~exist('options','var')
-        options={};
+    
+    if iscell(varargin) && length(varargin)==1    
+        options=varargin(1);
+    else
+        options=varargin;
     end
     
     ax=axis(ah);

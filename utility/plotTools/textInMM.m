@@ -1,5 +1,7 @@
 function h=textInMM(Xpos,Ypos,String,varargin)
+% textInMM(Xpos,Ypos,String,varargin)
 
+%%
 targetPos=[Xpos,Ypos]/10;
 
 if length(varargin)==1 && iscell(varargin)
@@ -29,9 +31,21 @@ boxPos(3:4)=(paperPos([3:4])).*boxPos(3:4);
 boxPos(2)=paperPos(4)-boxPos(2);
 
 scale=boxPos(3:4)./(boxRange([2,4])-boxRange([1,3]));
-scale(2)=-scale(2)
+scale(2)=-scale(2);
 
-targetInPaper=(targetPos-boxPos(1:2))./scale+boxRange([1,3]);
+% targetInPaper=(targetPos-boxPos(1:2))./scale+boxRange([1,3]);
+axDir={'Xdir','Ydir'};
+for nn=1:2
+    if strcmpi(get(gca,axDir{nn}),'reverse')
+        targetInPaper(nn)=-(targetPos(nn)-boxPos(nn))./scale(nn)+boxRange(2*nn);
+    else
+        targetInPaper(nn)=(targetPos(nn)-boxPos(nn))./scale(nn)+boxRange(2*nn-1);
+    end
+end
+
+if strcmpi(get(gca,'YDir'),'reverse')
+end
+
 
 if strcmpi(get(gca,'xscale'),'log')
     targetInPaper(1)=exp(targetInPaper(1));
