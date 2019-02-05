@@ -1,4 +1,6 @@
 function plotIdentityLine(ah,varargin);
+% plotIdentityLine(axisHandle,...)
+%%
     if ~exist('ah','var')
         ah=gca;
     end
