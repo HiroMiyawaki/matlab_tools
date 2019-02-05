@@ -20,9 +20,13 @@ scale=paperPos(3:4);
 Ypos=paperPos(4)-Ypos;
 
 if SetTop;
-    h=subplot('position',[Xpos/scale(1),Ypos/scale(2)-Height/scale(2),Width/scale(1),Height/scale(2)]);
+    ax=subplot('position',[Xpos/scale(1),Ypos/scale(2)-Height/scale(2),Width/scale(1),Height/scale(2)]);
 else
-    h=subplot('position',[Xpos/scale(1),Ypos/scale(2),Width/scale(1),Height/scale(2)]);
+    ax=subplot('position',[Xpos/scale(1),Ypos/scale(2),Width/scale(1),Height/scale(2)]);
+end
+
+if nargout>0
+    h=ax;
 end
 
 set(gcf,'paperunit',unit);

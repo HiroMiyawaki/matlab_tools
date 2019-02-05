@@ -29,7 +29,7 @@ boxPos(3:4)=(paperPos([3:4])).*boxPos(3:4);
 boxPos(2)=paperPos(4)-boxPos(2);
 
 scale=boxPos(3:4)./(boxRange([2,4])-boxRange([1,3]));
-scale(2)=-scale(2)
+scale(2)=-scale(2);
 
 targetInPaper=(targetPos-boxPos(1:2))./scale+boxRange([1,3]);
 
@@ -40,8 +40,10 @@ if strcmpi(get(gca,'yscale'),'log')
     targetInPaper(2)=exp(targetInPaper(2));
 end
 
-h=text(targetInPaper(1),targetInPaper(2),String,Property{:});
-
+ax=text(targetInPaper(1),targetInPaper(2),String,Property{:});
+if nargout>0
+    h=ax;
+end
 if ~strcmp(unit,'centimeters')
     set(gcf,'paperunit',unit)
 end
