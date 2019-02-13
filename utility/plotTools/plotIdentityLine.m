@@ -5,8 +5,8 @@ function plotIdentityLine(ah,varargin);
         ah=gca;
     end
     
-    if iscell(varargin) && length(varargin)==1    
-        options=varargin(1);
+    if iscell(varargin) && length(varargin)==1 && iscell(varargin{1})
+        options=varargin{1};
     else
         options=varargin;
     end
