@@ -3,10 +3,14 @@ function detectHeartBeat(basicMetaData,varargin)
 paramNames={'lfpFile','nCh','nSample','samplingRate','ecgCh',...
             'evtFileName','saveFileName',...
             'minPeak','minPeakDistance','medFiltOrder','bufferSize',...
-        	'overlap','threshold','nBaseline'}
+        	'overlap','threshold','nBaseline'};
 
 if ~isempty(basicMetaData)
-    params.lfpFile=[basicMetaData.Basename '.lfp'];
+    if isfield(basicMetaData,'lfp')
+        params.lfpFile=basicMetaData.lfp;
+    else
+        params.lfpFile=[basicMetaData.Basename '.lfp'];
+    end
     params.nCh=basicMetaData.nCh;
     params.nSample=basicMetaData.nSample.lfp;
     params.samplingRate=basicMetaData.SampleRates.lfp;
@@ -16,7 +20,13 @@ if ~isempty(basicMetaData)
         error('No ECG Ch was found')
     end    
     
-    params.evtFileName=[basicMetaData.Basename '.hrt.evt'];
+    if isfield(basicMetaData,'lfp')
+        [lfpFileDir,lfpFilename,~]=fileparts(basicMetaData.lfp)
+        params.evtFileName=fullfile(lfpFileDir,[lfpFilename '.hrt.evt']);
+    else    
+        params.evtFileName=[basicMetaData.Basename '.hrt.evt'];
+    end
+    
     params.saveFileName=[basicMetaData.Basename '.heartBeat.events.mat'];
 end
       

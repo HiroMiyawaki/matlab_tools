@@ -36,7 +36,13 @@ if ~isempty(basicMetaData)
     end
 
     if ~isfield(params,'lfpFile')
-        params.lfpFile=[basicMetaData.Basename '.' params.fileType];
+        if isfield(basicMetaData,'dat') && strcmpi(params.fileType,'dat')
+            params.lfpFile=basicMetaData.dat;
+        elseif isfield(basicMetaData,'lfp') && strcmpi(params.fileType,'lfp')
+            params.lfpFile=basicMetaData.lfp;
+        else
+            params.lfpFile=[basicMetaData.Basename '.' params.fileType];
+        end
     end
     
     if ~isfield(params,'samplingRate')
@@ -49,7 +55,7 @@ if ~isempty(basicMetaData)
         params.nSample=basicMetaData.nSample.(params.fileType);
     end
     if ~isfield(params,'evtFileName')
-        params.evtFileName=[basicMetaData.Basename '.ttl.evt'];
+        params.evtFileName=[basicMetaData.BaseDir '/lfp/' basicMetaData.SessionName '.ttl.evt'];
     end
     if ~isfield(params,'saveFileName')
         params.saveFileName=[basicMetaData.Basename '.ttl.events.mat'];

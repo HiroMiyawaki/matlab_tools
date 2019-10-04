@@ -6,9 +6,10 @@ param.fontsize=10;
 param.markerSize=12;
 param.lineWidth=1;
 param.margin=0;
-param=parseParameters(param,varargin);
-param.windowBottom=1000;
+param.windowBottom=20;
 param.windowLeft=0;
+
+param=parseParameters(param,varargin);
 %%
 % expand=5.5;
 expand=3;
