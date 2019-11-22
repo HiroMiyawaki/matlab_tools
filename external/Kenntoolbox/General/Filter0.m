@@ -24,3 +24,4 @@ shift = (length(b)-1)/2;
 [y0 z] = filter(b,1,x);
 
 y = [y0(shift+1:end,:) ; z(1:shift,:)];
+

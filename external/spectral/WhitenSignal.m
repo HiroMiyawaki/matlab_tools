@@ -12,7 +12,7 @@ function [y, A] = WhitenSignal(x,varargin)
 Trans = 0;
 if size(x,1)<size(x,2)
     x = x';
-    Transf =1;
+    Trans =1;
 end
 [nT nCh]  = size(x);
 y = zeros(nT,nCh);
