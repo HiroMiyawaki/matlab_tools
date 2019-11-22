@@ -1,5 +1,12 @@
 function varargout=sortDominantRow(input,takeAbs,threshold)
-
+% function [output,order]=sortDominantRow(input,takeAbs,threshold)
+%  sort input matrix by dominant position of each each row
+%  here, dominant position means column with largetest with each row 
+%  
+%  output=input(order,:);
+%
+%  by Hiro Miyawaki @OCU, 2019 Nov.
+%%
 if ~exist('takeAbs','var') || isempty(takeAbs)
     takeAbs=true;
 end
