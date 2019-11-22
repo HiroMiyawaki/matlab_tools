@@ -1,28 +1,36 @@
-function sortDominantRow(input,takeAbs)
+function varargout=sortDominantRow(input,takeAbs,threshold)
 
 if ~exist('takeAbs','var') || isempty(takeAbs)
     takeAbs=true;
 end
-
+if ~exist('threshold','var') || isempty(threshold)
+    threshold=-inf;
+end
 if takeAbs
     maxVal=max(abs(input),[],2);
-    mask=abs(input)==maxVal;
+    mask=abs(input)==maxVal&abs(input)>threshold;
 else
     maxVal=max(input,[],2);
-    mask=(input==maxVal);
+    mask=(input==maxVal)&input>threshold;
 end
 [~,order]=sortrows(mask,'descend');
 
 
 mask=mask(order,:);
-input=(input(order,:));
+output=(input(order,:));
 
 for cIdx=1:size(input,2)
     rIdx=find(mask(:,cIdx));
-    [~,order]=sort(input(rIdx,cIdx),'descend');
+    [~,temp]=sort(output(rIdx,cIdx),'descend');
 
-    input(rIdx,:)=input(rIdx(order),:);
+    output(rIdx,:)=output(rIdx(temp),:);
+    order(rIdx)=order(rIdx(temp));
 end
 
-imagesc(input)
+if nargout>0
+    varargout{1}=output;
+end
     
+if nargout>1
+    varargout{2}=order;
+end
