@@ -1,5 +1,10 @@
 function ah = addAxis(Target,YAxisLocation,YColor,options)
-
+% ah=addAxis(Target,YAxisLocation,YColor,options)
+% typical usase:
+%  addAxis(gca,'right',[1,0,0])
+%
+%
+%%
 if ~exist('Target','var')
     Target=gca;
 end

@@ -1,5 +1,13 @@
 function addScriptName(ScriptName,showDate,Offset,TextOption)
-
+%addScriptName(ScriptName,showDate,Offset,TextOption)
+%  add script name on the bottom right of the figure
+%
+% typical usage: addScriptName(mfilename, true)
+%
+%
+% 2011- Hiro Miyawaki @ UWM
+% 2016- Hiro Miyawaki @ OCU
+%
 if ~exist('ScriptName','var') || isempty(ScriptName)
     ScriptName=['script called at ' datestr(now)];
     showDate=false;
