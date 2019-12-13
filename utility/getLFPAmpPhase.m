@@ -29,6 +29,8 @@ function varargout = getLFPAmpPhase(lfpFile,nCh,ch,varargin)
 if ~exist(lfpFile,'file')
     error('%s not found',lfpFile)
 end
+fprintf('%s start %s with data of %s\n',datestr(now),mfilename,lfpFile)
+
 if mod(length(varargin),2)~=0
     error('options must be pair(s) of name and value')    
 end

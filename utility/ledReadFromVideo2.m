@@ -1,6 +1,7 @@
 function ledReadFromVideo2(videofile,imageRange,tStart,tEnd,sessionName,saveFileName)
     close all
     nBaseFrame=250;%10 sec
+    fprintf('%s start %s with data of %s\n',datestr(now),mfilename,videofile)
 
     if ~exist('tStart','var')
         tStart=0;

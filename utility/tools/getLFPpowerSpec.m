@@ -17,6 +17,7 @@ function varargout=getLFPpowerSpec(lfpFile,nCh,targetCh,saveFile,varargin)
 if ~exist(lfpFile,'file')
     error('%s not found', lfpFile)
 end
+fprintf('%s start %s with data of %s\n',datestr(now),mfilename,lfpFile)
 
 info=dir(lfpFile);
 nSample=info.bytes/2/nCh;

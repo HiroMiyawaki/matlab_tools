@@ -3,11 +3,12 @@ function fh=initFig4A4(varargin)
 
 param.landscape=false;
 param.fontsize=10;
-param.markerSize=12;
+param.markerSize=9;
 param.lineWidth=1;
 param.margin=0;
 param.windowBottom=20;
 param.windowLeft=0;
+param.axesColor=[0,0,0];
 
 param=parseParameters(param,varargin);
 %%
@@ -43,6 +44,10 @@ set(fh,'paperPosition',[param.margin,param.margin,width-param.margin,height-para
 set(fh,'defaultAxesFontName','Helvetica')
 set(fh,'defaultTextFontName','Helvetica')
  
+set(fig,'defaultAxesXColor',param.axesColor); % factory is [0.15,0.15,0.15]
+set(fig,'defaultAxesYColor',param.axesColor);
+set(fig,'defaultAxesZColor',param.axesColor);
+
 set(fh,'defaultAxesFontSize',param.fontsize);
 set(fh,'defaultTextFontSize',param.fontsize);
 set(fh,'defaultAxesLineWidth', param.lineWidth);

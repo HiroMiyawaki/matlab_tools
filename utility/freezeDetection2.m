@@ -5,6 +5,7 @@ if ~exist('sessionName','var') || isempty(sessionName)
 else
     sessionName=['_' sessionName '_'];
 end
+fprintf('%s start %s with data of %s\n',datestr(now),mfilename,videofile)
 
 
 close all
