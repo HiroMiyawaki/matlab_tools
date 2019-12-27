@@ -44,9 +44,9 @@ set(fh,'paperPosition',[param.margin,param.margin,width-param.margin,height-para
 set(fh,'defaultAxesFontName','Helvetica')
 set(fh,'defaultTextFontName','Helvetica')
  
-set(fig,'defaultAxesXColor',param.axesColor); % factory is [0.15,0.15,0.15]
-set(fig,'defaultAxesYColor',param.axesColor);
-set(fig,'defaultAxesZColor',param.axesColor);
+set(fh,'defaultAxesXColor',param.axesColor); % factory is [0.15,0.15,0.15]
+set(fh,'defaultAxesYColor',param.axesColor);
+set(fh,'defaultAxesZColor',param.axesColor);
 
 set(fh,'defaultAxesFontSize',param.fontsize);
 set(fh,'defaultTextFontSize',param.fontsize);
