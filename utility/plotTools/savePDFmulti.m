@@ -57,10 +57,10 @@ function savePDFmulti(fhList,pdfFile,varargin)
         
         for n=1:length(param.pngPage)  
             
-            if n==1 && length(fhList)==1
+            if param.pngPage(n)==1 && length(fhList)==1
                 postFix='';
             else                
-                postFix=sprintf('_page%02d',n);
+                postFix=sprintf('_page%02d',param.pngPage(n));
             end
             
             orient(fhList(param.pngPage(n)),'portrait')
