@@ -10,8 +10,11 @@ function savePDFmulti(fhList,pdfFile,varargin)
 %     vector : true %set true to use painters
 %     resolution : 300 %resolution of output PDF
 %     catPDFoptions : {} %options passed to catPDF
+%     pngPage : [] % list of pages saved as png as well
+%     convJpeg : false % if true png files are also coverted to jpeg
+%     convertPath : '/usr/local/bin/convert' % path of convert command, used fo jpeg conversion
 %
-%  by Hiro Miyawaki at the Osaka City Univ, Feb 2019
+%  by Hiro Miyawaki at the Osaka City Univ, 2019-2020
 %
 
     param.vector=true;
@@ -19,6 +22,7 @@ function savePDFmulti(fhList,pdfFile,varargin)
     param.catPDFoptions={};
     param.pngPage=[];
     param.convertPath='/usr/local/bin/convert';
+    param.convJpeg=false;
     
     param=parseParameters(param,varargin);
 
@@ -66,11 +70,13 @@ function savePDFmulti(fhList,pdfFile,varargin)
             orient(fhList(param.pngPage(n)),'portrait')
             print(fhList(param.pngPage(n)),fullfile(filePath,'png',sprintf('%s%s.png',fileName,postFix)),'-dpng',resolution)
             
-            command=sprintf('%s %s.png -quality 60 %s.jpeg',...
-                param.convertPath,...
-                fullfile(filePath,'png',sprintf('%s%s',fileName,postFix)),...
-                fullfile(filePath,'jpeg',sprintf('%s%s',fileName,postFix)));
-            system(command);
+            if param.convJpeg
+                command=sprintf('%s %s.png -quality 60 %s.jpeg',...
+                    param.convertPath,...
+                    fullfile(filePath,'png',sprintf('%s%s',fileName,postFix)),...
+                    fullfile(filePath,'jpeg',sprintf('%s%s',fileName,postFix)));
+                system(command);
+            end
         end
     end
 
