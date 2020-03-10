@@ -3,7 +3,7 @@ function varargout=uniqueCellRows(x)
 [list,~,id]=unique(x);
 id=reshape(id,size(x));
 
-[rowList,firstIndex,rowID]=unique(id,'rows')
+[rowList,firstIndex,rowID]=unique(id,'rows');
 
 if nargout>0
     varargout{1}=list(rowList);
