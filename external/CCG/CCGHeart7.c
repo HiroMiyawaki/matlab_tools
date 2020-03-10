@@ -134,7 +134,9 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[] ) {
 			Time2 = Times[SecondSpike];
 
 			/* check if we have left the interesting region */
-			if(fabs(Time1 - Time2) > FurthestEdge) break;
+			//if(fabs(Time1 - Time2) > FurthestEdge) break;
+			// changed by Hiro Miyawaki on Mar 06, 2020
+			if(fabs(Time1 - Time2) >= FurthestEdge) break;
 
 			/* calculate bin */
 			Bin = HalfBins + (int)(floor(0.5+(Time2-Time1)/BinSize));
