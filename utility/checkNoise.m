@@ -3,7 +3,7 @@ function varargout=checkNoise(datFile,nCh,chToUse,sampleRate,tRange,doPlot)
 %
 %   checkNoise(datFile,nCh,sampleRate,chToUse,tRange)
 %       do FFT and display the result
-%   [power,frequency]=checkNoise(datFile,nCh,sampleRate,chToUse,tRange)
+%   [power,frequency,exampleTrace,tBin]=checkNoise(datFile,nCh,sampleRate,chToUse,tRange)
 %       do FFT and return the result
 %
 %   datFile : target .dat file
@@ -33,11 +33,11 @@ dat = memmapfile(datFile, 'Format', {'int16', [nCh, (fileInfo.bytes/nCh/2)], 'ra
 lfp=single(dat.Data.raw(chToUse,tRange(1)*sampleRate+1:tRange(2)*sampleRate))*0.195;
     
 
-y=fft(lfp);
+y=fft(lfp,[],2);
 len=size(lfp,2);
 pow2=abs(y/len);
-pow=pow2(1:len/2+1);
-pow(2:end-1)=2*pow(2:end-1);
+pow=pow2(:,1:len/2+1);
+pow(:,2:end-1)=2*pow(:,2:end-1);
 
 freq=sampleRate*(0:(len/2))/len;
 
@@ -52,13 +52,22 @@ if nargout==0 || doPlot
     axis tight
     box off
     subplot(1,4,4)
-    plot(freq(freq<101),pow(freq<101),'k-','linewidth',0.5)
+    plot(freq(freq<101),pow(:,freq<101),'k-','linewidth',0.5)
     set(gca,'yscale','log')
     xlabel('Hz')
     ylabel('\muV^2/Hz')
     xlim([0,100])
     ylim(10.^[-3,2])
-else
-    varargout{1}=pow(freq<101);
+end
+if nargout>0
+    varargout{1}=pow(:,freq<101);
+end
+if nargout>1
     varargout{2}=freq(freq<101);
+end
+if nargout>2
+    varargout{3}=lfp(:,1:dur*sampleRate);
+end
+if nargout>3
+    varargout{4}=(1:dur*sampleRate)/sampleRate;
 end
