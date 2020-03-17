@@ -3,13 +3,13 @@ function ledReadFromVideo2(videofile,imageRange,tStart,tEnd,sessionName,saveFile
     nBaseFrame=250;%10 sec
     fprintf('%s start %s with data of %s\n',datestr(now),mfilename,videofile)
 
-    if ~exist('tStart','var')
+    if ~exist('tStart','var')|| isempty(tStart)
         tStart=0;
     end    
     
     vr=VideoReader(videofile);
 
-    if ~exist('tEnd','var')
+    if ~exist('tEnd','var')|| isempty(tEnd)
         tEnd=vr.Duration;
     end
     
