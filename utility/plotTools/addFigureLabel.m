@@ -9,7 +9,7 @@ XPos=2.5;
 end
 
 if ~exist('Offset','var')
-Offset=7.5;
+Offset=5;
 end
 
 if ~exist('PositionType','var')

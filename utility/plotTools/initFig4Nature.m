@@ -9,6 +9,7 @@ param.margin=0;
 param.windowBottom=20;
 param.windowLeft=0;
 param.axesColor=[0,0,0];
+param.height=24.7;
 %%
 param=parseParameters(param,varargin);
 
@@ -17,10 +18,14 @@ expand=3;
 
 if param.nColumn==1
     width=8.9;
+elseif param.nColumn==1.5
+%     width=13.6;
+    width=12.0;
 else
     width=18.3;
 end
-height=24.7;
+
+height=param.height;
 
 paperOrient='portrait';
 
@@ -32,9 +37,10 @@ set(fh, 'paperUnit','centimeters','Units','centimeters')
 set(fh,'position',[param.windowLeft,param.windowBottom,(width-param.margin*2),(height-param.margin*2)])
 set(fh, 'Units','centimeters')
 set(fh,'PaperOrientation',paperOrient)
-set(fh,'PaperType','a4')
-set(fh,'paperPosition',[param.margin,param.margin,width-param.margin,height-param.margin])
-% set(fh,'paperPosition',[0,0,width,height])
+% set(fh,'PaperType','a4')
+set(fh,'PaperSize',[width,height])
+% set(fh,'paperPosition',[param.margin,param.margin,width-param.margin,height-param.margin])
+set(fh,'paperPosition',[0,0,width,height])
 
 set(fh,'defaultAxesFontName','Helvetica')
 set(fh,'defaultTextFontName','Helvetica')
