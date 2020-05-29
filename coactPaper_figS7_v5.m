@@ -1,4 +1,4 @@
-function coactPaper_figS7_v4()
+function coactPaper_figS7_v5()
 labelWeight=true;
 labelCase=false;
 labelSize=8;
@@ -14,37 +14,37 @@ panel_01(x,y);
 panelLetter2(x-letGapX,y-letGapY,alphabet(1,labelCase),'fontSize',labelSize,'isBold',labelWeight)
 drawnow();
 
-x=11;y=6+50;
+x=11+93;y=6;
 panel_02(x,y);
 panelLetter2(x-letGapX,y-letGapY,alphabet(2,labelCase),'fontSize',labelSize,'isBold',labelWeight)
 drawnow();
 
-x=11+90;y=6;
+x=11;y=6+38;
 panel_03(x,y)
 panelLetter2(x-letGapX,y-letGapY,alphabet(3,labelCase),'fontSize',labelSize,'isBold',labelWeight)
 drawnow();
 
-x=11;y=6+78.5;
+x=11+51.5;y=6+38;
 panel_04(x,y);
 panelLetter2(x-letGapX,y-letGapY,alphabet(4,labelCase),'fontSize',labelSize,'isBold',labelWeight)
 drawnow();
 
-x=11+84;y=6+78.5;
+x=11+93;y=6+38;
 panel_05(x,y);
 panelLetter2(x-letGapX,y-letGapY,alphabet(5,labelCase),'fontSize',labelSize,'isBold',labelWeight)
 drawnow();
 
-x=11;y=6+170;
+x=11;y=6+128;
 panel_06(x,y);
 panelLetter2(x-letGapX,y-letGapY,alphabet(6,labelCase),'fontSize',labelSize,'isBold',labelWeight)
 drawnow();
 
-x=71;y=6+170;
+x=71;y=6+128;
 panel_07(x,y);
 panelLetter2(x-letGapX,y-letGapY,alphabet(7,labelCase),'fontSize',labelSize,'isBold',labelWeight)
 drawnow();
 
-x=100;y=6+170;
+x=104;y=6+128;
 panel_08(x,y);
 panelLetter2(x-letGapX,y-letGapY,alphabet(8,labelCase),'fontSize',labelSize,'isBold',labelWeight)
 drawnow();
@@ -55,7 +55,7 @@ drawnow();
 if ~exist('~/Dropbox/FearAnalyses/paper/figure','dir')
     mkdir('~/Dropbox/FearAnalyses/paper/figure')
 end
-% % print(fh,'~/Dropbox/FearAnalyses/paper/figure/exfig07.pdf','-dpdf','-painters','-r300')
+print(fh,'~/Dropbox/FearAnalyses/paper/figure/exfig07.pdf','-dpdf','-painters','-r300')
 
 end
 %%
@@ -133,7 +133,7 @@ tableGapX=2;
 tableWidth=76-tableGapX;
 
 % nCellWidth=18;
-nCellHeight=15;
+nCellHeight=10;
 % nCellGapX=15;
 % nCellGapXintra=(tableWidth-nCellWidth*3)/2;
 
@@ -245,6 +245,13 @@ end
 
 %%
 function panel_02(x,y)
+
+nCellWidth=18;
+nCellHeight=15;
+% nCellGapX=15;
+nCellGapXintra=6.5;%(tableWidth-nCellWidth*3)/2;
+
+
 % coact=poolVar('coactCompCell_LT.mat');
 coact=poolVar('coactCompCell.mat');
 info=poolVar('okUnit.cellinfo.mat');
@@ -298,53 +305,26 @@ end
 reg=reg';
 
 %%
-colTemp=setCoactColor()
+colTemp=setCoactColor();
 
 piCol=[colTemp.cellType.inh;
        colTemp.cellType.nc;
        colTemp.cellType.ex];
 
 targetReg={'PrL L5','BLA','vCA1'};
-behList={'wake','nrem','rem'};
-cellTypeList={'excitatory cells','inhibitory cells'};
+% behList={'wake','nrem','rem'};
+% cellTypeList={'excitatory cells','inhibitory cells'};
 
-tableGapX=2;
-tableWidth=76-tableGapX;
+% tableGapX=2;
+% tableWidth=76-tableGapX;
 
-nCellWidth=18;
-nCellHeight=15;
-% nCellGapX=15;
-nCellGapXintra=(tableWidth-nCellWidth*3)/2;
 
-behWidth=28;
-% behHeight=nCellHeight;
-behGapXinter=14;
-behGapXintra=5;
+% behWidth=28;
+% behGapXinter=14;
+% behGapXintra=5;
 
-yGapIntraTop=10;
-% yGapIntraBottom=14.5;
-% yGapInter=13.5;
-
-tableHight=nCellHeight*2+yGapIntraTop;
-
-% wTotal=tableWidth+tableGapX+behWidth*2+behGapXinter+behGapXintra;
- 
-% nremFRwidth=26;
-% nremFRheigth=15;
-% nremFRGapX=5;
-
-% frzModwidth=31;
-% frzModheigth=nremFRheigth;
-% frzModGapXIntra=5;
-% frzModGapXinter=wTotal-frzModwidth*2-frzModGapXIntra-nremFRwidth*2-nremFRGapX;
-
-% labelWeight=true;
-% labelCase=false;
-% labelSize=8;
-% letGapX=5;
-% letGapY=6;
-
-% sesName={'Baseline','Conditioning','Context','Cue ses. before first tone','Cue ses. after first tone'};
+% yGapIntraTop=10;
+% tableHight=nCellHeight*2+yGapIntraTop;
 
 eiLeg{1}=sprintf('\\color[rgb]{%f %f %f}%s',colTemp.cellType.ex, 'Excitatory');
 eiLeg{2}=sprintf('\\color[rgb]{%f %f %f}%s',colTemp.cellType.inh, 'Inhibitory');
@@ -426,6 +406,19 @@ for targetIdx=1:length(targetReg)
 end
 end
 function panel_03(x,y)
+
+% tableGapX=2;
+% tableWidth=76-tableGapX;
+
+nCellHeight=15;
+
+behWidth=15;
+behHeight=16;
+% behGapXinter=14;
+behGapXintra=4;
+
+yGapIntraTop=14;
+
 % coact=poolVar('coactCompCell_LT.mat');
 coact=poolVar('coactCompCell.mat');
 meanFR=poolVar('meanFR.mat');
@@ -503,64 +496,20 @@ behList={'wake','nrem','rem'};
 cellTypeList={'excitatory cells','inhibitory cells'};
 
 
-tableGapX=2;
-tableWidth=76-tableGapX;
-
-% nCellWidth=18;
-nCellHeight=15;
-% nCellGapX=15;
-% nCellGapXintra=(tableWidth-nCellWidth*3)/2;
-
-behWidth=28;
-behHeight=nCellHeight;
-behGapXinter=14;
-behGapXintra=5;
-
-yGapIntraTop=10;
-% yGapIntraBottom=14.5;
-% yGapInter=13.5;
-
-% tableHight=nCellHeight*2+yGapIntraTop;
-
-% wTotal=tableWidth+tableGapX+behWidth*2+behGapXinter+behGapXintra;
-
-% nremFRwidth=26;
-% nremFRheigth=15;
-% nremFRGapX=5;
-
-% frzModwidth=31;
-% frzModheigth=nremFRheigth;
-% frzModGapXIntra=5;
-% frzModGapXinter=wTotal-frzModwidth*2-frzModGapXIntra-nremFRwidth*2-nremFRGapX;
-
-% labelWeight=true;
-% labelCase=false;
-% labelSize=8;
-% letGapX=5;
-% letGapY=6;
-
-% pCnt=0;
-% sesName={'Baseline','Conditioning','Context','Cue ses. before first tone','Cue ses. after first tone'};
-% 
-% eiLeg{1}=sprintf('\\color[rgb]{%f %f %f}%s',colTemp.cellType.ex, 'Excitatory');
-% eiLeg{2}=sprintf('\\color[rgb]{%f %f %f}%s',colTemp.cellType.inh, 'Inhibitory');
-% eiLeg{3}=sprintf('\\color[rgb]{%f %f %f}%s',colTemp.cellType.nc, 'Not classified');
-
-
 for n=1:2
     yTickPos.beh.PrLL5{n}=[];
     yTickPos.beh.vCA1{n}=[];
     yTickPos.beh.BLA{n}=[];
 
-%     yTickPos.nrem.PrLL5{n}=[];
-%     yTickPos.nrem.vCA1{n}=[];
-%     yTickPos.nrem.BLA{n}=[];
+    yRange.beh.PrLL5{n}=[];
+    yRange.beh.vCA1{n}=[];
+    yRange.beh.BLA{n}=[];
 end
 
 yTickPos.beh.BLA{1}=[0.5,1,2,5];
 yTickPos.beh.vCA1{1}=[0.5,1,2,5];
 
-% yTickPos.nrem.vCA1{2}=[2,5,10,20];
+yRange.beh.PrLL5{1}=[1,4.2];
 %%
 for targetIdx=1:length(targetReg)
     yTop=y;%+(targetIdx-1)*(nCellHeight+yGapInter+nremFRheigth+yGapInterReg);
@@ -582,13 +531,15 @@ for targetIdx=1:length(targetReg)
             partnerName{n}='Othres';
             partnerNameCore{n}='Othres';
             pairCol(n,:)=colTemp.region.others;
+            pairLeg{2*n-1}=sprintf('\\color[rgb]{%f %f %f} %s', pairCol(n,:),partnerNameCore{n});
         else
             id=target(cellfun(@(x) any(strcmp(x,partnerList{n})), partner(target)));
             partnerName{n}=['Coupled with ' partnerList{n}];
             partnerNameCore{n}=partnerList{n};
             pairCol(n,:)=colTemp.pair.(strrep(strrep([targetReg{targetIdx} partnerList{n}],' ',''),'/',''));
+            pairLeg{2*n-1}=sprintf('\\color[rgb]{%f %f %f}%s',pairCol(n,:),'Coupled');
+            pairLeg{2*n}=sprintf('\\color[rgb]{%f %f %f}with %s', pairCol(n,:),partnerNameCore{n});
         end
-        pairLeg{n+1}=sprintf('\\color[rgb]{%f %f %f}%s',pairCol(n,:),partnerName{n});
         eiId{1}=id(cellType(id)==1);
         eiId{2}=id(cellType(id)==-1);
                 
@@ -697,11 +648,15 @@ for targetIdx=1:length(targetReg)
 
         
         set(gca,'YScale','log')
-        set(gca,'XTick',1:3,'XTickLabel',upper(behList))
+        set(gca,'XTick',1:3,'XTickLabel',upper(behList),'XTickLabelRotation',20)
         axis tight
         xlim([0.5,3.5])
         ax=fixAxis;
-        ylim(exp(log(ax(3:4))+diff(log(ax(3:4)))*[-1,1]/10))
+        if isempty(yRange.beh.(strrep(targetReg{targetIdx},' ','')){eiIdx})
+            ylim(exp(log(ax(3:4))+diff(log(ax(3:4)))*[-1,1]/10))
+        else
+            ylim(yRange.beh.(strrep(targetReg{targetIdx},' ','')){eiIdx});
+        end
         ax=fixAxis;
 
         tempTick=yTickPos.beh.(strrep(targetReg{targetIdx},' ','')){eiIdx};
@@ -714,7 +669,9 @@ for targetIdx=1:length(targetReg)
         if eiIdx==1
             ylabel('Firing rate (Hz)')
         else
-            text2(1,1,pairLeg,ax,'verticalALign','top')
+        for n=1:5
+            text2(1,1-0.15*(n-1),pairLeg{n},ax,'verticalALign','top')
+        end
         end
     end
     
@@ -959,6 +916,11 @@ for targetIdx=1:length(targetReg)
 end
 end
 function panel_04(x,y)
+yGapIntraBottom=14;
+nremFRwidth=22.5;
+nremFRheigth=15;
+nremFRGapX=13;
+
 % coact=poolVar('coactCompCell_LT.mat');
 coact=poolVar('coactCompCell.mat');
 meanFR=poolVar('meanFR.mat');
@@ -1030,67 +992,26 @@ colTemp=setCoactColor();
 
 
 targetReg={'PrL L5','BLA','vCA1'};
-% behList={'wake','nrem','rem'};
 cellTypeList={'excitatory cells','inhibitory cells'};
 
-% tableGapX=2;
-% tableWidth=76-tableGapX;
 
-% nCellWidth=18;
-% nCellHeight=15;
-% nCellGapX=15;
-% nCellGapXintra=(tableWidth-nCellWidth*3)/2;
 
-% behWidth=28;
-% behHeight=nCellHeight;
-% behGapXinter=14;
-% behGapXintra=5;
-
-% yGapIntraTop=10;
-yGapIntraBottom=14.5;
-% yGapInter=13.5;
-
-% tableHight=nCellHeight*2+yGapIntraTop;
-
-% wTotal=tableWidth+tableGapX+behWidth*2+behGapXinter+behGapXintra;
-
-nremFRwidth=26;
-nremFRheigth=15;
-nremFRGapX=5;
-
-% frzModwidth=31;
-frzModheigth=nremFRheigth;
-% frzModGapXIntra=5;
-% frzModGapXinter=wTotal-frzModwidth*2-frzModGapXIntra-nremFRwidth*2-nremFRGapX;
-% 
-% labelWeight=true;
-% labelCase=false;
-% labelSize=8;
-% letGapX=5;
-% letGapY=6;
-
-% sesName={'Baseline','Conditioning','Context','Cue ses. before first tone','Cue ses. after first tone'};
-% 
-% eiLeg{1}=sprintf('\\color[rgb]{%f %f %f}%s',colTemp.cellType.ex, 'Excitatory');
-% eiLeg{2}=sprintf('\\color[rgb]{%f %f %f}%s',colTemp.cellType.inh, 'Inhibitory');
-% eiLeg{3}=sprintf('\\color[rgb]{%f %f %f}%s',colTemp.cellType.nc, 'Not classified');
 
 
 for n=1:2
-%     yTickPos.beh.PrLL5{n}=[];
-%     yTickPos.beh.vCA1{n}=[];
-%     yTickPos.beh.BLA{n}=[];
+
 
     yTickPos.nrem.PrLL5{n}=[];
     yTickPos.nrem.vCA1{n}=[];
     yTickPos.nrem.BLA{n}=[];
 end
 
-% yTickPos.beh.BLA{1}=[0.5,1,2,5];
-% yTickPos.beh.vCA1{1}=[0.5,1,2,5];
+yTickPos.nrem.PrLL5{1}=[1,2,5];
+yTickPos.nrem.vCA1{1}=[0.5,1,2,5,10,20];
 
 yTickPos.nrem.vCA1{2}=[2,5,10,20];
 %%
+yExpandSum=[0,0];
 for targetIdx=1:length(targetReg)
     yTop=y;%+(targetIdx-1)*(nCellHeight+yGapInter+nremFRheigth+yGapInterReg);
     target=find(strcmp(reg,targetReg{targetIdx}));
@@ -1110,13 +1031,17 @@ for targetIdx=1:length(targetReg)
             partnerName{n}='Othres';
             partnerNameCore{n}='Othres';
             pairCol(n,:)=colTemp.region.others;
+            pairLeg{2*n-1}=sprintf('\\color[rgb]{%f %f %f}%s',pairCol(n,:),'Othres')
         else
             id=target(cellfun(@(x) any(strcmp(x,partnerList{n})), partner(target)));
             partnerName{n}=['Coupled with ' partnerList{n}];
             partnerNameCore{n}=partnerList{n};
             pairCol(n,:)=colTemp.pair.(strrep(strrep([targetReg{targetIdx} partnerList{n}],' ',''),'/',''));
+            pairLeg{2*n-1}=sprintf('\\color[rgb]{%f %f %f}%s',pairCol(n,:),'Coupled');
+            pairLeg{2*n}=sprintf('\\color[rgb]{%f %f %f}with %s', pairCol(n,:),partnerNameCore{n});
         end
-        pairLeg{n+1}=sprintf('\\color[rgb]{%f %f %f}%s',pairCol(n,:),partnerName{n});
+%         pairLeg{n}=sprintf('\\color[rgb]{%f %f %f}%s',pairCol(n,:),partnerName{n});
+        
         eiId{1}=id(cellType(id)==1);
         eiId{2}=id(cellType(id)==-1);
         
@@ -1126,12 +1051,7 @@ for targetIdx=1:length(targetReg)
         fprintf('in %s, %s cells : n=%d\n',targetReg{targetIdx},partnerNameCore{n},sum(cnt))
         
         for eiIdx=1:2           
-%             for behIdx=1:3
-%                 beh=behList{behIdx};
-%                 eiFR.mean(n,behIdx,eiIdx)=nanmean(log10(behFR.(beh)(eiId{eiIdx})));
-%                 eiFR.ste(n,behIdx,eiIdx)=nanste(log10(behFR.(beh)(eiId{eiIdx})));
-%                 eiFR.raw{n,behIdx,eiIdx}=(behFR.(beh)(eiId{eiIdx}));
-%             end
+
 %             
             val=log10(nremFR(eiId{eiIdx},:));
 %             val(any(isnan(val),2),:)=[];
@@ -1142,47 +1062,10 @@ for targetIdx=1:length(targetReg)
             for nremIdx=1:4
                 eiNrem.raw{n,nremIdx,eiIdx}=nremFR(eiId{eiIdx},nremIdx)';
             end
-            
-%             eiFrzMod.mean(n,:,eiIdx)=nanmean(frzMod(eiId{eiIdx},:));
-%             eiFrzMod.ste(n,:,eiIdx)=nanste(frzMod(eiId{eiIdx},:));
-%             for sesIdx=1:size(frzMod,2)
-%                 eiFrzMod.raw{n,sesIdx,eiIdx}=frzMod(eiId{eiIdx},sesIdx)';
-%             end
+
         end
     end
-    
-%     eiFR.p.all=ones(3,2);
-%     eiFR.p.each=ones(3,2,3,3);
-%     for behIdx=1:3
-%         for eiIdx=1:2
-%             temp=cellfun(@(x) ones(size(x)),eiFR.raw(:,behIdx,eiIdx),'UniformOutput',false);
-%             grp=[];
-%             for regIdx=1:size(temp,1)
-%                 grp=[grp,regIdx*temp{regIdx}]
-%             end
-%             val=cat(2,eiFR.raw{:,behIdx,eiIdx});
-%             [p,~,s]=kruskalwallis(val,grp,'off');
-% %             c=multcompare(s,'display','off');
-%             eiFR.p.all(behIdx,eiIdx)=p;
-% %             eiFR.p.each(behIdx,eiIdx,:,:)=c;            
-% 
-% 
-% %             sdRes=SteelDwass(val,grp);
-% %             eiFR.p.each(behIdx,eiIdx,:,:)=sdRes(:,[1,2,4]);
-% 
-%             idx=0;
-%             nGrp=3;
-%             for n=1:nGrp-1
-%                 for m=n+1:nGrp
-%                     idx=idx+1;
-%                     p=ranksum(eiFR.raw{n,behIdx,eiIdx},eiFR.raw{m,behIdx,eiIdx});
-%                     p=p*nGrp*(nGrp-1)/2;
-%                     eiFR.p.each(behIdx,eiIdx,idx,:)=[n,m,p];
-%                 end
-%             end
-% 
-%         end
-%     end
+ 
     
     eiNrem.p.all=ones(4,2);
     eiNrem.p.each=ones(4,2,3,3);
@@ -1236,179 +1119,19 @@ for targetIdx=1:length(targetReg)
         end
     end
 
-%     eiFrzMod.p.all=ones(size(frzMod,2),2);
-%     eiFrzMod.p.each=ones(size(frzMod,2),2,3,3);
-%     eiFrzMod.p.couple.all=ones(3,2);
-%     eiFrzMod.p.couple.each=ones(3,2,size(frzMod,2)*(size(frzMod,2)-1)/2,3);
-%     for sesIdx=1:size(frzMod,2)
-%         for eiIdx=1:2
-%             temp=cellfun(@(x) ones(size(x)),eiFrzMod.raw(:,sesIdx,eiIdx),'UniformOutput',false);
-%             grp=[];
-%             for regIdx=1:size(temp,1)
-%                 grp=[grp,regIdx*temp{regIdx}]
-%             end
-%             val=cat(2,eiFrzMod.raw{:,sesIdx,eiIdx});
-%             [p,~,s]=kruskalwallis(val,grp,'off');
-% %             c=multcompare(s,'display','off');
-%             eiFrzMod.p.all(sesIdx,eiIdx)=p;
-% %             eiFrzMod.p.each(sesIdx,eiIdx,:,:)=c;            
-%             
-% %             sdRes=SteelDwass(val,grp);
-% %             eiFrzMod.p.each(sesIdx,eiIdx,:,:)=sdRes(:,[1,2,4]);
-% 
-% 
-%             idx=0;
-%             nGrp=3;
-%             for n=1:nGrp-1
-%                 for m=n+1:nGrp
-%                     idx=idx+1;
-%                     p=ranksum(eiFrzMod.raw{n,sesIdx,eiIdx},eiFrzMod.raw{m,sesIdx,eiIdx});
-%                     p=p*nGrp*(nGrp-1)/2;
-%                     eiFrzMod.p.each(sesIdx,eiIdx,idx,:)=[n,m,p];
-%                 end
-%             end
-%         end
-%     end 
-%     for eiIdx=1:2
-%         for n=1:3
-%             temp=cat(1,eiFrzMod.raw{n,:,eiIdx})
-%             temp(:,any(isnan(temp),1))=[];
-%             eiFrzMod.p.couple.all(n,eiIdx)=friedman(temp',1,'off');
-% 
-% %             grp=(1:size(temp,1))'.*ones(size(temp));
-% %             sdRes=SteelDwass(temp(:),grp(:));
-% %             eiFrzMod.p.couple.each(n,eiIdx,:,:)=sdRes(:,[1,2,4]);
-%             idx=0;
-%             for sesIdx1=1:size(frzMod,2)-1
-%                 for sesIdx2=sesIdx1+1:size(frzMod,2);
-%                     idx=idx+1;
-%                     p=signrank(temp(sesIdx1,:),temp(sesIdx2,:))*size(frzMod,2)*(size(frzMod,2)-1)/2;
-%                     eiFrzMod.p.couple.each(n,eiIdx,idx,:)=[sesIdx1,sesIdx2,p];
-%                 end
-%             end
-%         end
-%     end
-%     
-%     regRatio=zeros(2,3);
-%     for eiIdx=1:2
-%         id=target(cellType(target)==3-eiIdx*2);
-%         cnt=histcounts(cellfun(@length,partner(id)),-0.5:2.5);
-%         regRatio(eiIdx,:)=cnt/sum(cnt)*100;
-%     end
-
-%     % # partner regions
-%     xShift=(targetIdx-1)*(nCellWidth+nCellGapXintra);
-%     yShift=tableHight+yGapIntraTop;
-%     subplotInMM(x+xShift,yTop+yShift,nCellWidth,nCellHeight)
-% 
-%     bar(0:2,regRatio','linestyle','none')
-%     colormap(gca,piCol([3,1],:))
-%     box off
-%     xlabel('# partner region')
-%     if targetIdx==1
-%         ylabel({'Fraction of' 'cells (%)'})
-%     end
-%     xlim([-0.5,2.5])
-%     title(targetReg{targetIdx},'fontsize',5,'fontweight','normal')
-%     ax=fixAxis;
-%     text2(0.7,1,eiLeg(1:2),ax,'verticalAlign','top')
-%     
-%     if targetIdx==1
-%         pCnt=pCnt+1;
-%         panelLetter2(x+xShift-letGapX,yTop+yShift-letGapY+2,alphabet(pCnt,labelCase),'fontSize',labelSize,'isBold',labelWeight)
-%     end
-%     % FR for each state
-%     yShift=(targetIdx-1)*(nCellHeight+yGapIntraTop);
-%     xShift=tableWidth+tableGapX+behGapXinter;
-%     for eiIdx=1:2
-%         subplotInMM(x+xShift+(behWidth+behGapXintra)*(eiIdx-1),yTop+yShift,behWidth,behHeight)
-% 
-%         hold on
-%         posPool=[];
-%         poolAvg=[];
-%         for n=1:length(partnerName)
-% %             bar((1:3)+(n-2)*0.3,squeeze(eiFR.mean(n,:,eiIdx))',0.1,'LineStyle','none','FaceColor',pairCol(n,:))
-%             avg=10.^eiFR.mean(n,:,eiIdx);
-%             pos=10.^(eiFR.mean(n,:,eiIdx)+eiFR.ste(n,:,eiIdx))-avg;
-%             neg=avg-10.^(eiFR.mean(n,:,eiIdx)-eiFR.ste(n,:,eiIdx));
-%             errorbar((1:3)+(n-2)*0.1,avg,neg,pos,...
-%                 'linestyle','none','color',pairCol(n,:),'CapSize',0,'Marker','.','MarkerSize',4,'linewidth',0.5)
-%             posPool(n,:)=avg+pos;
-%             poolAvg(n,:)=avg;
-%         end
-%         for behIdx=1:3
-%             if eiFR.p.all(behIdx,eiIdx)<0.001
-%                 sigTxt='###';
-%             elseif eiFR.p.all(behIdx,eiIdx)<0.01
-%                 sigTxt='##';
-%             elseif eiFR.p.all(behIdx,eiIdx)<0.05
-%                 sigTxt='#';
-%             else
-%                 sigTxt='';
-%             end
-%             
-%             if ~isempty(sigTxt)
-% %                 plot(behIdx+0.1*[-1,1],max(posPool(:,behIdx))*1.1+[0,0],'k-','linewidth',0.5)
-%                 text(behIdx+0.02,max(posPool(:,behIdx))*1.15,sigTxt,'horizontalAlign','center','fontsize',5,'verticalAlign','middle')
-%                 
-%                 if any(eiFR.p.each(behIdx,eiIdx,:,3)<0.05)
-%                     [sigPos,sigTxt]=findSig(squeeze(eiFR.p.each(behIdx,eiIdx,:,:)),poolAvg(:,behIdx));           
-%                     
-%                     for sigIdx=1:size(sigPos,1)
-%                         if sigPos(sigIdx,1)<0
-%                             sigX=[-0.18,-0.22,-0.22,-0.18];
-%                             sigTxtX=-0.23;
-%                             vAlign='middle';
-%                         else
-%                             sigX=[0.18,0.22,0.22,0.18];
-%                             sigTxtX=0.22;
-%                             vAlign='top';
-%                         end
-%                         sigY=sort(sigPos(sigIdx,3:4)).*[1.00,1.00];
-%                         
-%                         plot(behIdx+sigX,sigY([1,1,2,2]),'k-','linewidth',0.5)
-%                         text(behIdx+sigTxtX,geomean(sigPos(sigIdx,3:4)),sigTxt{sigIdx},'fontsize',6,...
-%                             'Rotation',90,'VerticalAlignment',vAlign,'HorizontalAlignment','center')
-%                     end
-%                     
-%                 end
-%                 
-%             
-%             end
-%         end
-% 
-%         
-%         set(gca,'YScale','log')
-%         set(gca,'XTick',1:3,'XTickLabel',upper(behList))
-%         axis tight
-%         xlim([0.5,3.5])
-%         ax=fixAxis;
-%         ylim(exp(log(ax(3:4))+diff(log(ax(3:4)))*[-1,1]/10))
-%         ax=fixAxis;
-% 
-%         tempTick=yTickPos.beh.(strrep(targetReg{targetIdx},' ','')){eiIdx};
-%         if ~isempty(tempTick)
-%             set(gca,'YTick',tempTick)
-%         end   
-%         
-%         title({targetReg{targetIdx},cellTypeList{eiIdx}},'fontsize',5,'fontweight','normal')
-% %         set(gca,'YTick',log10([(1:9)/100,(1:9)/10,1:9,(1:9)*10]),'YTickLabel',[(1:9)/100,(1:9)/10,1:9,(1:9)*10])
-%         if eiIdx==1
-%             ylabel('Firing rate (Hz)')
-%         else
-%             text2(1,1,pairLeg,ax,'verticalALign','top')
-%         end
-%     end
-%     
-%     if targetIdx==1
-%         pCnt=pCnt+1;
-%         panelLetter2(x+xShift-letGapX-2,yTop+yShift-letGapY+2,alphabet(pCnt,labelCase),'fontSize',labelSize,'isBold',labelWeight)
-%     end
     % FR within NREM
-    xShift=0;
-    yShift=(targetIdx-1)*(frzModheigth+yGapIntraBottom);%+(3*behHeight+2*yGapIntraTop)+yGapInter;
-    for eiIdx=1:2
-        subplotInMM(x+xShift+(nremFRwidth+nremFRGapX)*(eiIdx-1),yTop+yShift,nremFRwidth,nremFRheigth)
+   
+    for eiIdx=2%:2
+        xShift=0;
+        yShift=(targetIdx-1)*yGapIntraBottom+yExpandSum(eiIdx)*nremFRheigth;%+(3*behHeight+2*yGapIntraTop)+yGapInter;
+        if targetIdx==1
+            yExpand=1;
+        else
+            yExpand=1;
+        end
+        
+        subplotInMM(x+xShift+(nremFRwidth+nremFRGapX)*(eiIdx-1)*0,yTop+yShift,nremFRwidth,nremFRheigth*yExpand)
+        yExpandSum(eiIdx)=yExpandSum(eiIdx)+yExpand;
         hold on
         posPool=[];
         poolAvg=[];
@@ -1467,11 +1190,11 @@ for targetIdx=1:length(targetReg)
         sigPosY=max(posPool(:));
         sigPosX=[1:2,3.5:4.5];
         curPos=0;
-        sigTxtPool={};
+        sigTxtPool=cell(1,3);
         for n=length(partnerName):-1:1
             sigTxt=getSigTxt(eiNrem.p.couple.all(n,eiIdx));
             if ~isempty(sigTxt)
-                sigTxtPool(end+1,:)={repmat('\dag',1,length(sigTxt)),pairCol(n,:)};
+                sigTxtPool{n}=repmat('\dag',1,length(sigTxt));
 %                 text(5,poolAvg(n,4),repmat('\dag',1,length(sigTxt)),'Interpreter','latex',...
 %                     'color',pairCol(n,:))
                 
@@ -1491,17 +1214,17 @@ for targetIdx=1:length(targetReg)
         
         set(gca,'XTick',[1:2,3.5:4.5],'XTickLabel',{'First','Last'},'XTickLabelRotation',0)
         set(gca,'YScale','log')
-        title({targetReg{targetIdx},cellTypeList{eiIdx}},'fontsize',5,'fontweight','normal')
+        title([targetReg{targetIdx},' ' cellTypeList{eiIdx}],'fontsize',5,'fontweight','normal')
         axis tight
         xlim([0.5,5.2])
         ax=fixAxis;
         
-        for idx=1:size(sigTxtPool,1)
-            text2(4.8/5.2,1-0.15*(size(sigTxtPool,1)-idx),...
-                sigTxtPool{idx,1},ax,...
-                'color',sigTxtPool{idx,2},...
-                'verticalAlign','top','horizontalALign','left','Interpreter','latex')
-        end
+%         for idx=1:size(sigTxtPool,1)
+%             text2(4.8/5.2,1-0.15*(size(sigTxtPool,1)-idx),...
+%                 sigTxtPool{idx,1},ax,...
+%                 'color',sigTxtPool{idx,2},...
+%                 'verticalAlign','top','horizontalALign','left','Interpreter','latex')
+%         end
         
         ylim(exp(log(ax(3:4))+diff(log(ax(3:4)))*[-1,1]/10))
         ax=fixAxis;             
@@ -1511,136 +1234,36 @@ for targetIdx=1:length(targetReg)
             set(gca,'YTick',tempTick)
         end        
         
-        if eiIdx==1
+%         if eiIdx==1
             ylabel('Firing rate (Hz)')
-        else
-            text2(1,1,pairLeg,ax,'verticalALign','top')
+%         end
+        for n=1:5
+            text2(1,1/yExpand-0.15*(n-1)/yExpand,pairLeg{n},ax,'verticalALign','top')
         end
-        text2(1/4.5,-0.25,'Pre-cond.',ax,'horizontalAlign','center','verticalALign','top')
-        text2(1/5,-0.37,'NREM',ax,'horizontalAlign','center','verticalALign','top')
-        text2(4/5,-0.25,'Post-cond.',ax,'horizontalAlign','center','verticalALign','top')
-        text2(4/5,-0.37,'NREM',ax,'horizontalAlign','center','verticalALign','top')
+        for n=1:3
+            if ~isempty(sigTxtPool{n})
+                text2(5/5.2,1/yExpand-0.15*(2*n-2)/yExpand,sigTxtPool{n},ax,'verticalALign','top',...
+                    'color',pairCol(n,:),'Interpreter','latex','horizontalALign','center')
+            end
+        end
+        text2(1/4.7,-0.25/yExpand,'Pre-cond.',ax,'horizontalAlign','center','verticalALign','top')
+        text2(1/4.7,-0.37/yExpand,'NREM',ax,'horizontalAlign','center','verticalALign','top')
+        text2(3.5/4.7,-0.25/yExpand,'Post-cond.',ax,'horizontalAlign','center','verticalALign','top')
+        text2(3.5/4.7,-0.37/yExpand,'NREM',ax,'horizontalAlign','center','verticalALign','top')
         
     end
 
+end
+end
 
-%     % Freeze modulation
-%     xShift=2*nremFRwidth+nremFRGapX+frzModGapXinter;
-%     yShift=(targetIdx-1)*(frzModheigth+yGapIntraBottom)+(3*behHeight+2*yGapIntraTop)+yGapInter;
-% 
-%     for eiIdx=1:2
-%         subplotInMM(x+xShift+(frzModwidth+frzModGapXIntra)*(eiIdx-1),yTop+yShift,frzModwidth,frzModheigth)
-%         
-%         hold on
-%         posPool=[];
-%         poolAvg=[];
-% 
-%         for n=1:length(partnerName)
-%             errorbar((1:size(frzMod,2))+(2-n)*0.1,eiFrzMod.mean(n,:,eiIdx),eiFrzMod.ste(n,:,eiIdx),...
-%                 'color',pairCol(n,:),'CapSize',0,'linewidth',0.5,'Marker','.','MarkerSize',4,'linestyle','none')
-% 
-%             posPool(n,:)=eiFrzMod.mean(n,:,eiIdx)+eiFrzMod.ste(n,:,eiIdx);
-%             poolAvg(n,:)=eiFrzMod.mean(n,:,eiIdx);
-%         end
-%      
-%         
-%         title([targetReg{targetIdx} ' ' cellTypeList{eiIdx}],'fontsize',5,'fontweight','normal')
-%         xlim([0.5,size(frzMod,2)+1])
-%         
-%         sigPosY=max(posPool(:));
-%         sigPosX=1:size(frzMod,2);
-%         curPos=0;
-%         ax=axis;
-%         stepSize=diff(ax(3:4))*0.1;
-%         sigTxtPool={};
-%         for n=length(partnerName):-1:1
-%             sigTxt=getSigTxt(eiFrzMod.p.couple.all(n,eiIdx));
-%             if ~isempty(sigTxt)
-%             sigTxtPool(end+1,:)={repmat('\dag',1,length(sigTxt)),pairCol(n,:)};
-% %                 text(size(frzMod,2)+0.5,poolAvg(n,end),repmat('\dag',1,length(sigTxt)),'Interpreter','latex',...
-% %                     'color',pairCol(n,:))
-%                 
-%                 [sigPos,sigTxt]=findSigPos(squeeze(eiFrzMod.p.couple.each(n,eiIdx,:,:)));
-%                 if ~isempty(sigPos)
-%                     for idx=1:size(sigPos,1)
-%                         plot(sigPosX(sigPos(idx,[1,1,2,2])), sigPosY+stepSize*((sigPos(idx,3)+curPos)+[0,0.5,0.5,0]),'-',...
-%                             'LineWidth',0.5,'color',pairCol(n,:))
-% %                         text(mean(sigPosX(sigPos(idx,[1,2]))),sigPosY+stepSize*(sigPos(idx,3)+curPos+0.25),...
-% %                             repmat('\dag',1,length(sigTxt{idx})),...
-% %                             'HorizontalAlignment','center','VerticalAlignment','baseline', 'Color',pairCol(n,:),...
-% %                             'Interpreter','latex')
-%                         text(mean(sigPosX(sigPos(idx,[1,2]))),sigPosY+stepSize*(sigPos(idx,3)+curPos+0.25),...
-%                             sigTxt{idx},...
-%                             'HorizontalAlignment','center','VerticalAlignment','baseline', 'Color',pairCol(n,:)...
-%                             )                        
-%                     end                
-%                     curPos=curPos+max(sigPos(:,3));
-%                 end
-%             end
-%             
-%         end        
-%         
-%         ax=fixAxis;
-%         for idx=1:size(sigTxtPool,1)
-%             text(size(frzMod,2)+0.5,ax(4)-diff(ax(3:4))*0.15*(size(sigTxtPool,1)-idx),...
-%                 sigTxtPool{idx,1},'color',sigTxtPool{idx,2},...
-%                 'verticalAlign','top','horizontalALign','left','Interpreter','latex')
-%         end
-%         
-%         for sesIdx=1:size(frzMod,2)
-%             if eiFrzMod.p.all(sesIdx,eiIdx)<0.001
-%                 sigTxt='###';
-%             elseif eiFrzMod.p.all(sesIdx,eiIdx)<0.01
-%                 sigTxt='##';
-%             elseif eiFrzMod.p.all(sesIdx,eiIdx)<0.05
-%                 sigTxt='#';
-%             else
-%                 sigTxt='';
-%             end
-%             
-%             if ~isempty(sigTxt)
-%                 text(sesIdx,max(posPool(:,sesIdx))+diff(ax(3:4))*0.05,sigTxt,'horizontalAlign','center','fontsize',5,'verticalAlign','middle')
-% 
-%                 if any(eiFrzMod.p.each(sesIdx,eiIdx,:,3)<0.05)
-%                     [sigPos,sigTxt]=findSig(squeeze(eiFrzMod.p.each(sesIdx,eiIdx,:,:)),poolAvg(:,sesIdx));      
-%                     
-%                     for sigIdx=1:size(sigPos,1)
-%                         if sigPos(sigIdx,1)<0
-%                             sigX=[-0.18,-0.22,-0.22,-0.18];
-%                             sigTxtX=-0.24;
-%                             vAlign='middle';
-%                         else
-%                             sigX=[0.18,0.22,0.22,0.18];
-%                             sigTxtX=0.22;
-%                             vAlign='top';
-%                         end
-%                         sigY=sort(sigPos(sigIdx,3:4)).*[1.00,1.00];
-%                         
-%                         plot(sesIdx+sigX,sigY([1,1,2,2]),'k-','linewidth',0.5)
-%                         text(sesIdx+sigTxtX,mean(sigPos(sigIdx,3:4)),sigTxt{sigIdx},'fontsize',6,...
-%                             'Rotation',90,'VerticalAlignment',vAlign,'HorizontalAlignment','center')
-%                     end                   
-%                     
-%                 end            
-%             end
-%                 
-%         end 
-%         
-%         
-%         if eiIdx==1
-%             ylabel({'Freeze' 'modulation index'})
-%         else
-%             text2(1,1,pairLeg,ax,'verticalALign','top')
-%         end        
-%         set(gca,'xtick',1:size(frzMod,2),'XTickLabel',sesName,'XTickLabelRotation',20)
-%     end
-%     if targetIdx==1
-%         pCnt=pCnt+1;
-%         panelLetter2(x+xShift-letGapX-6,yTop+yShift-letGapY+2,alphabet(pCnt,labelCase),'fontSize',labelSize,'isBold',labelWeight)
-%     end
-end
-end
+%%
 function panel_05(x,y)
+yGapIntraBottom=14;
+
+frzModwidth=24;
+frzModheigth=15;
+frzModGapXIntra=19;
+
 % coact=poolVar('coactCompCell_LT.mat');
 coact=poolVar('coactCompCell.mat');
 % meanFR=poolVar('meanFR.mat');
@@ -1715,43 +1338,8 @@ behList={'wake','nrem','rem'};
 cellTypeList={'excitatory cells','inhibitory cells'};
 
 
-tableGapX=2;
-tableWidth=76-tableGapX;
 
-nCellWidth=18;
-nCellHeight=15;
-nCellGapX=15;
-nCellGapXintra=(tableWidth-nCellWidth*3)/2;
 
-behWidth=28;
-behHeight=nCellHeight;
-behGapXinter=14;
-behGapXintra=5;
-
-yGapIntraTop=10;
-yGapIntraBottom=14.5;
-yGapInter=13.5;
-
-tableHight=nCellHeight*2+yGapIntraTop;
-
-wTotal=tableWidth+tableGapX+behWidth*2+behGapXinter+behGapXintra;
-
-nremFRwidth=26;
-nremFRheigth=15;
-nremFRGapX=5;
-
-frzModwidth=31;
-frzModheigth=nremFRheigth;
-frzModGapXIntra=5;
-frzModGapXinter=wTotal-frzModwidth*2-frzModGapXIntra-nremFRwidth*2-nremFRGapX;
-
-labelWeight=true;
-labelCase=false;
-labelSize=8;
-letGapX=5;
-letGapY=6;
-
-pCnt=0;
 sesName={'Baseline','Conditioning','Context','Cue ses. before first tone','Cue ses. after first tone'};
 
 eiLeg{1}=sprintf('\\color[rgb]{%f %f %f}%s',colTemp.cellType.ex, 'Excitatory');
@@ -1793,13 +1381,15 @@ for targetIdx=1:length(targetReg)
             partnerName{n}='Othres';
             partnerNameCore{n}='Othres';
             pairCol(n,:)=colTemp.region.others;
+            pairLeg{2*n-1}=sprintf('\\color[rgb]{%f %f %f}%s', pairCol(n,:),partnerNameCore{n});
         else
             id=target(cellfun(@(x) any(strcmp(x,partnerList{n})), partner(target)));
             partnerName{n}=['Coupled with ' partnerList{n}];
             partnerNameCore{n}=partnerList{n};
             pairCol(n,:)=colTemp.pair.(strrep(strrep([targetReg{targetIdx} partnerList{n}],' ',''),'/',''));
+            pairLeg{2*n-1}=sprintf('\\color[rgb]{%f %f %f}%s',pairCol(n,:),'Coupled');
+            pairLeg{2*n}=sprintf('\\color[rgb]{%f %f %f}with %s', pairCol(n,:),partnerNameCore{n});
         end
-        pairLeg{n+1}=sprintf('\\color[rgb]{%f %f %f}%s',pairCol(n,:),partnerName{n});
         eiId{1}=id(cellType(id)==1);
         eiId{2}=id(cellType(id)==-1);
                 
@@ -1895,11 +1485,12 @@ for targetIdx=1:length(targetReg)
         curPos=0;
         ax=axis;
         stepSize=diff(ax(3:4))*0.1;
-        sigTxtPool={};
+        sigTxtPool=cell(1,3);
         for n=length(partnerName):-1:1
             sigTxt=getSigTxt(eiFrzMod.p.couple.all(n,eiIdx));
             if ~isempty(sigTxt)
-            sigTxtPool(end+1,:)={repmat('\dag',1,length(sigTxt)),pairCol(n,:)};
+%             sigTxtPool(end+1,:)={repmat('\dag',1,length(sigTxt)),pairCol(n,:)};
+            sigTxtPool{n}=repmat('\dag',1,length(sigTxt));
 %                 text(size(frzMod,2)+0.5,poolAvg(n,end),repmat('\dag',1,length(sigTxt)),'Interpreter','latex',...
 %                     'color',pairCol(n,:))
                 
@@ -1924,11 +1515,11 @@ for targetIdx=1:length(targetReg)
         end        
         
         ax=fixAxis;
-        for idx=1:size(sigTxtPool,1)
-            text(size(frzMod,2)+0.5,ax(4)-diff(ax(3:4))*0.15*(size(sigTxtPool,1)-idx),...
-                sigTxtPool{idx,1},'color',sigTxtPool{idx,2},...
-                'verticalAlign','top','horizontalALign','left','Interpreter','latex')
-        end
+%         for idx=1:size(sigTxtPool,1)
+%             text(size(frzMod,2)+0.5,ax(4)-diff(ax(3:4))*0.15*(size(sigTxtPool,1)-idx),...
+%                 sigTxtPool{idx,1},'color',sigTxtPool{idx,2},...
+%                 'verticalAlign','top','horizontalALign','left','Interpreter','latex')
+%         end
         
         for sesIdx=1:size(frzMod,2)
             if eiFrzMod.p.all(sesIdx,eiIdx)<0.001
@@ -1970,10 +1561,17 @@ for targetIdx=1:length(targetReg)
         end 
         
         
-        if eiIdx==1
+%         if eiIdx==1
             ylabel({'Freeze' 'modulation index'})
-        else
-            text2(1,1,pairLeg,ax,'verticalALign','top')
+%         end
+        for n=1:5
+            text2(1,1-0.15*(n-1),pairLeg{n},ax,'verticalALign','top')
+        end
+        for n=1:3
+            if ~isempty(sigTxtPool{n})
+                text2(5/5.2,1-0.15*(2*n-2),sigTxtPool{n},ax,'verticalALign','top',...
+                    'color',pairCol(n,:),'Interpreter','latex','horizontalALign','center')
+            end
         end        
         set(gca,'xtick',1:size(frzMod,2),'XTickLabel',sesName,'XTickLabelRotation',20)
     end
@@ -1984,8 +1582,8 @@ end
 function panel_06(x,y)
 %%
 width=17.5;
-height=12;
-yGap=10.5;
+height=15;
+yGap=13;
 xGap=9;
 %%
 coact=poolVar('coactCompCell.mat');
@@ -2303,8 +1901,8 @@ end
 %%
 function panel_07(x,y)
 width=14;
-height=12;
-yGap=10.5;
+height=15;
+yGap=13;
 % xGap=13;
 %%
 coact=poolVar('coactCompCell.mat');
@@ -2534,9 +2132,9 @@ subplotInMM(x,y+(height+yGap)*(regIdx-2),width,height)
 end
 %%
 function panel_08(x,y)
-width=14;
-height=12;
-yGap=10.5;
+width=46/3;
+height=15;
+yGap=13;
 xGap=10;
 %%
 coact=poolVar('coactCompCell.mat');
