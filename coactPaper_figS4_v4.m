@@ -129,7 +129,7 @@ else
     % [ytick,order]=sort(yGapStep)
     % ytickLabel=enName(order);
     %
-    % tTxt={'Reactivation in Pre-coniditioning sleep','Reactivation in Post-conditioning sleep'};
+    % tTxt={'Reactivation in Pre-conditioning sleep','Reactivation in Post-conditioning sleep'};
     %
     % for prePost=1:2
     %     subplot(3,2,prePost)
@@ -176,7 +176,7 @@ else
         end
     end
     
-    tTxt={'Pre-coniditioning homecage session','Post-conditioning homecage session'};
+    tTxt={'Pre-conditioning homecage session','Post-conditioning homecage session'};
     
     yGapUit=ceil(diff(prctile(coact(:),[0.01,99.99]))/10)*10;
     yGapStep=0:-1:-size(coact,1)+1
@@ -244,21 +244,21 @@ info{2}=load('~/Dropbox/FearAnalyses/png/example-coac-post-info.mat');
 
 ytick=info{1}.ytick;
 yGapUit=info{1}.yGapUit;
-
+scalePos=1.1;
 for prePost=1:2
     subplotInMM(x+(prePost-1)*(width+xGap),y,width,height)
     
     image(info{prePost}.xRange,info{prePost}.yRange,flipud(im{prePost}))
     set(gca,'YDir','normal')
     hold on
-    plot(info{prePost}.dur*0.8+[0,1],yGapUit*(min(ytick)-1.3)+[0,0],'k-','LineWidth',1)
-    text(info{prePost}.dur*0.8+0.5,yGapUit*(min(ytick)-1.3),'1 min','horizontalAlign','center','verticalAlign','top')
-    plot(info{prePost}.dur*0.8+1.05+[0,0],yGapUit*(min(ytick)-1.3)+[0,50],'k-','LineWidth',1)
-    text(info{prePost}.dur*0.8+1.05,yGapUit*(min(ytick)-1.3)+25,' 50 z^2','horizontalAlign','left','verticalAlign','middle')
+    plot(info{prePost}.dur*0.8+[0,1],yGapUit*(min(ytick)-scalePos)+[0,0],'k-','LineWidth',1)
+    text(info{prePost}.dur*0.8+0.5,yGapUit*(min(ytick)-scalePos),'1 min','horizontalAlign','center','verticalAlign','top')
+    plot(info{prePost}.dur*0.8+1.05+[0,0],yGapUit*(min(ytick)-scalePos)+[0,50],'k-','LineWidth',1)
+    text(info{prePost}.dur*0.8+1.05,yGapUit*(min(ytick)-scalePos)+25,' 50 z^2','horizontalAlign','left','verticalAlign','middle')
     
     if prePost==1
         for n=1:length(info{prePost}.ytickLabel)
-            text(0,yGapUit*ytick(n),info{prePost}.ytickLabel{n},'horizontalAlign','right','fontsize',5)
+            text(info{prePost}.xRange(1)-diff(info{prePost}.xRange)*0.01,yGapUit*ytick(n),info{prePost}.ytickLabel{n},'horizontalAlign','right','fontsize',5)
         end
     end
     axis off
@@ -397,7 +397,7 @@ for n=1:3
         if n==1
             if m==0
                 title({'Pre-conditioning'},'fontweight','normal','fontsize',5)
-                textInMM(x+(width+gapX/2),y-3,'Entire NREM','fontsize',5,'horizontalAlign','center')
+                textInMM(x+(width+gapX/2),y-4,'Entire NREM','fontsize',5,'horizontalAlign','center')
             else
                 title({'Post-conditioning'},'fontweight','normal','fontsize',5)
             end
@@ -418,7 +418,7 @@ for n=1:3
         if m==1 & n==1
             ps=get(gcf,'PaperSize')*10;
             xMM=x+(width+gapX)*m+width/2+[-2,0]-1.5;
-            yMM=y+totalY+[4,2]+2;
+            yMM=y+totalY+[4,2]+0.5;
             annotation('arrow',xMM/ps(1),1-yMM/ps(2),'color','w','HeadWidth',4,'HeadLength',4,...
             'LineWidth',1,'LineStyle','-')
         end        
@@ -580,7 +580,7 @@ for n=1:3
         if n==1
             if m==0
                 title({'Pre-conditioning'},'fontweight','normal','fontsize',5)
-                textInMM(x+(width+gapX/2),y-3,'NREM excluding SWR','fontsize',5,'horizontalAlign','center')
+                textInMM(x+(width+gapX/2),y-4,'NREM excluding SWR','fontsize',5,'horizontalAlign','center')
             else
                 title({'Post-conditioning'},'fontweight','normal','fontsize',5)
             end
@@ -600,19 +600,25 @@ for n=1:3
         end
         
     end
-    subplotInMM(x+width+0.5,y+totalY,1,height,true)
-    imagesc(subSig(:,1));
-    set(gca,'clim',[-1,1])
-    colormap(gca,flipud(col.pVal))
+    subplotInMM(x+width+0.5,y+totalY,2.5,height)
+    imagesc([subSig(:,1),-2*ones(size(subSig(:,1))),subSig(:,2)])
+    set(gca,'clim',[-2,1])
+    colormap(gca,[1,1,1;flipud(col.pVal)])
     box off
     axis off
-    
-    subplotInMM(x+width+2,y+totalY,1,height,true)
-    imagesc(subSig(:,2));
-    set(gca,'clim',[-1,1])
-    colormap(gca,flipud(col.pVal))
-    box off
-    axis off
+%     subplotInMM(x+width+0.5,y+totalY,1,height,true)
+%     imagesc(subSig(:,1));
+%     set(gca,'clim',[-1,1])
+%     colormap(gca,flipud(col.pVal))
+%     box off
+%     axis off
+%     
+%     subplotInMM(x+width+2,y+totalY,1,height,true)
+%     imagesc(subSig(:,2));
+%     set(gca,'clim',[-1,1])
+%     colormap(gca,flipud(col.pVal))
+%     box off
+%     axis off
     
     totalY=totalY+height+gapY;
 end
@@ -751,7 +757,7 @@ for n=1:3
         if n==1
             if m==0
                 title({'Pre-conditioning'},'fontweight','normal','fontsize',5)
-                textInMM(x+(width+gapX/2),y-3,'NREM excluding HFO','fontsize',5,'horizontalAlign','center')
+                textInMM(x+(width+gapX/2),y-4,'NREM excluding HFO','fontsize',5,'horizontalAlign','center')
             else
                 title({'Post-conditioning'},'fontweight','normal','fontsize',5)
             end
@@ -765,25 +771,31 @@ for n=1:3
         if m==1 & n==1
             ps=get(gcf,'PaperSize')*10;
             xMM=x+(width+gapX)*m+width/2+[-2,0]-1.5;
-            yMM=y+totalY+[4,2]+2;
+            yMM=y+totalY+[4,2]+0.5;
             annotation('arrow',xMM/ps(1),1-yMM/ps(2),'color','w','HeadWidth',4,'HeadLength',4,...
             'LineWidth',1,'LineStyle','-')
         end
     end
-    subplotInMM(x+width+0.5,y+totalY,1,height,true)
-    imagesc(subSig(:,1));
-    set(gca,'clim',[-1,1])
-    colormap(gca,flipud(col.pVal))
+%     subplotInMM(x+width+0.5,y+totalY,1,height,true)
+%     imagesc(subSig(:,1));
+%     set(gca,'clim',[-1,1])
+%     colormap(gca,flipud(col.pVal))
+%     box off
+%     axis off
+%     
+%     subplotInMM(x+width+2,y+totalY,1,height,true)
+%     imagesc(subSig(:,2));
+%     set(gca,'clim',[-1,1])
+%     colormap(gca,flipud(col.pVal))
+%     box off
+%     axis off
+%     
+    subplotInMM(x+width+0.5,y+totalY,2.5,height)
+    imagesc([subSig(:,1),-2*ones(size(subSig(:,1))),subSig(:,2)])
+    set(gca,'clim',[-2,1])
+    colormap(gca,[1,1,1;flipud(col.pVal)])
     box off
     axis off
-    
-    subplotInMM(x+width+2,y+totalY,1,height,true)
-    imagesc(subSig(:,2));
-    set(gca,'clim',[-1,1])
-    colormap(gca,flipud(col.pVal))
-    box off
-    axis off
-    
     totalY=totalY+height+gapY;
 end
 
