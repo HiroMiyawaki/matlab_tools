@@ -6,7 +6,7 @@ letGapX=5;
 letGapY=5;
 
 close all
-fh=initFig4Nature('height',24.7);
+fh=initFig4Nature('height',22);
 
 
 x=11;y=6;
