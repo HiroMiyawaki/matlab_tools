@@ -55,7 +55,7 @@ drawnow();
 if ~exist('~/Dropbox/FearAnalyses/paper/figure','dir')
     mkdir('~/Dropbox/FearAnalyses/paper/figure')
 end
-print(fh,'~/Dropbox/FearAnalyses/paper/figure/exfig07.pdf','-dpdf','-painters','-r300')
+% % print(fh,'~/Dropbox/FearAnalyses/paper/figure/exfig07.pdf','-dpdf','-painters','-r300')
 
 end
 %%
@@ -1868,7 +1868,7 @@ for regIdx=1:length(targetReg)
             text((length(cName)+0.5)*(cIdx-1)+1+0.5,ax(3)-diff(ax(3:4))*0.075,...
                 cName{cIdx},'horizontalAlign','center','fontsize',5,'verticalAlign','top')
         end
-        text(mean([0.5,length(cName)*2+0.5+0.5]),ax(3)-diff(ax(3:4))*0.3,'Coupled with',...
+        text(mean([0.5,length(cName)*2+0.5+0.5]),ax(3)-diff(ax(3:4))*0.3,'Coupled region',...
             'horizontalAlign','center','fontsize',5,'verticalAlign','top')
         
         title(['Cells in ' targetReg{regIdx}],'fontsize',5,'fontweight','normal')
@@ -2116,7 +2116,7 @@ subplotInMM(x,y+(height+yGap)*(regIdx-2),width,height)
                 'verticalAlign','top','horizontalAlign','right','rotation',40,'fontsize',5)
         end
 %         ylabel({'Shock' 'modulation index'})
-        text2(0.5,-0.4,'Coupled with',ax,'verticalAlign','top','horizontalAlign','center','fontsize',5)
+        text2(0.5,-0.4,'Coupled region',ax,'verticalAlign','top','horizontalAlign','center','fontsize',5)
         if regIdx==2
             text2(1.05,1,cellLeg,ax,'verticalAlign','top','fontsize',5)
             textInMM(x-6,y+height+yGap/2,'Shock modulation index','fontsize',5,'fontweight','normal',...
@@ -2351,7 +2351,7 @@ subplotInMM(x+(width+xGap)*(sesIdx-1),y+(height+yGap)*(rowOrder(regIdx)-1),width
         if  rowOrder(regIdx)==2
             ylabel(sprintf('Cue modulation index in %s session',chName{sesIdx}))
         end
-        text2(0.5,-0.4,'Coupled with',ax,'verticalAlign','top','horizontalAlign','center','fontsize',5)
+        text2(0.5,-0.4,'Coupled region',ax,'verticalAlign','top','horizontalAlign','center','fontsize',5)
         if rowOrder(regIdx)==1&sesIdx==3
             text2(1,1,cellLeg,ax,'verticalAlign','top','fontsize',5)
         end

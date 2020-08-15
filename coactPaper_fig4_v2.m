@@ -148,10 +148,10 @@ for targetIdx=1:length(targetReg)
     for n=1:length(partnerList)+1
         if n>length(partnerList)
             id=target(cellfun(@isempty,partner(target)));
-            partnerName{n}='Othres';
-            partnerNameCore{n}='Othres';
+            partnerName{n}='Others';
+            partnerNameCore{n}='Others';
             pairCol(n,:)=colTemp.region.others;
-            pairLeg{2*n-1}=sprintf('\\color[rgb]{%f %f %f}%s',pairCol(n,:),'Othres')
+            pairLeg{2*n-1}=sprintf('\\color[rgb]{%f %f %f}%s',pairCol(n,:),'Others')
         else
             id=target(cellfun(@(x) any(strcmp(x,partnerList{n})), partner(target)));
             partnerName{n}=['Coupled with ' partnerList{n}];
@@ -511,9 +511,9 @@ mesNameList.hfoPart={'HFO' 'participation (%)'};
 mesNameList.hfoGain={'FR modulation' 'by HFOs (%)'};
 mesNameList.spdlPart={'spindle' 'participation (%)'};
 mesNameList.spdlGain={'spindle' 'gain (%)'};
-mesNameList.delSpkPart={'Delta spike' 'participatio (%)'};
-mesNameList.preDelPart={'Delta onset' 'participatio (%)'};
-mesNameList.postDelPart={'Delta offset' 'participatio (%)'};
+mesNameList.delSpkPart={'Delta spike' 'participation (%)'};
+mesNameList.preDelPart={'Delta onset' 'participation (%)'};
+mesNameList.postDelPart={'Delta offset' 'participation (%)'};
 mesNameList.preDelGain={'Delta onset' 'gain (%)'};
 mesNameList.postDelGain={'Delta offset' 'gain (%)'};
 
@@ -558,8 +558,11 @@ for regIdx=1:length(targetReg)
 %         subplotInMM(x+(width+xGap)*(mesIdx-1),y,width,height)
         subplotInMM(x,y+(height+yGap)*(mesIdx-1)+(mesIdx>2)*3,width,height)
         hold on
-        for CTidx=0:1
             
+        fprintf('\n%s\n',[mesNameList.(mesName){:}])
+            
+        for CTidx=0:1
+            fprintf('%s ',CTname{3-n*CTidx})
             %                 set(gca,'xtick',1:length(cName),'XTickLabel',cName)
             avg=[];
             err=[];
@@ -593,6 +596,7 @@ for regIdx=1:length(targetReg)
             bar(xVal{2},avg(:,2),0.1,'EdgeColor',col(3-2*CTidx,:),'facecolor',col(3-2*CTidx,:))
             ax=fixAxis;
             for n=1:length(p)
+                fprintf('%s:p=%f ',cName{n},p(n))
                 if p(n)<0.001
                     sig='***';
                 elseif p(n)<0.01
@@ -606,6 +610,7 @@ for regIdx=1:length(targetReg)
                 plot((length(cName)+0.5)*(n-1)+CTidx+1+0.2*[-1,1],sigPosY+[0,0],'k-')
                 text((length(cName)+0.5)*(n-1)+CTidx+1,sigPosY,sig,'HorizontalAlignment','center','fontsize',7)
             end
+            fprintf('\n')
             
             %                 xLeg={};
             %                 for cIdx=1:length(cName)
@@ -635,7 +640,7 @@ for regIdx=1:length(targetReg)
             text((length(cName)+0.5)*(cIdx-1)+1+0.5,ax(3)-diff(ax(3:4))*0.075,...
                 cName{cIdx},'horizontalAlign','center','fontsize',5,'verticalAlign','top')
         end
-        text(mean([0.5,length(cName)*2+0.5+0.5]),ax(3)-diff(ax(3:4))*0.4,'Coupled with',...
+        text(mean([0.5,length(cName)*2+0.5+0.5]),ax(3)-diff(ax(3:4))*0.25,'Coupled region',...
             'horizontalAlign','center','fontsize',5,'verticalAlign','top')
         
         title(['Cells in ' targetReg{regIdx}],'fontsize',5,'fontweight','normal')
@@ -885,7 +890,7 @@ sesIdx=6;
                 'verticalAlign','top','horizontalAlign','right','rotation',35,'fontsize',5)
         end
         ylabel({'Shock' 'modulation index'})
-        text2(0.5,-0.4,'Coupled with',ax,'verticalAlign','top','horizontalAlign','center','fontsize',5)
+        text2(0.5,-0.4,'Coupled region',ax,'verticalAlign','top','horizontalAlign','center','fontsize',5)
         text2(1,1,cellLeg,ax,'verticalAlign','top','fontsize',5)
         title(['Cells in ' ciSub(regIdx,sesIdx).cellReg],'fontsize',5,'fontweight','normal')
 %         ylabel(['MI of ' ciSub(regIdx,sesIdx).cellReg ' cells'])
