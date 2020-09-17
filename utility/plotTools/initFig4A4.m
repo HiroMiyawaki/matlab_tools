@@ -48,8 +48,10 @@ set(fh,'defaultAxesXColor',param.axesColor); % factory is [0.15,0.15,0.15]
 set(fh,'defaultAxesYColor',param.axesColor);
 set(fh,'defaultAxesZColor',param.axesColor);
 
+set(gcf,'DefaultAxesFontSizeMode','manual') %for matlab2020a on mac
 set(fh,'defaultAxesFontSize',param.fontsize);
 set(fh,'defaultTextFontSize',param.fontsize);
+
 set(fh,'defaultAxesLineWidth', param.lineWidth);
 set(fh,'defaultLineLineWidth', param.lineWidth); 
 set(fh,'DefaultLineMarkerSize', param.markerSize); 
